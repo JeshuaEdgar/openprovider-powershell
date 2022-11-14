@@ -6,14 +6,14 @@ function Get-OPDomain {
     $domains = @()
     $limit = 500
     $offset = 0
-    $total_domains = (Invoke-RestMethod -Method Get "https://api.openprovider.eu/v1beta/domains" -Authentication Bearer -Token $auth_token).data.total
+    $total_domains = (Invoke-RestMethod -Method Get "https://api.openprovider.eu/v1beta/domains" -Authentication Bearer -Token $op_auth_token).data.total
     try {
         do {
             $domain_request_body = @{
                 limit  = $limit
                 offset = $offset
             }
-            $domains += (Invoke-RestMethod -Method Get "https://api.openprovider.eu/v1beta/domains" -Authentication Bearer -Token $auth_token -Body $domain_request_body).data.results
+            $domains += (Invoke-RestMethod -Method Get "https://api.openprovider.eu/v1beta/domains" -Authentication Bearer -Token $op_auth_token -Body $domain_request_body).data.results
             $offset += 500
         } until (
             $offset -ge $total_domains
