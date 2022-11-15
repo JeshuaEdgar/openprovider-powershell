@@ -18,19 +18,19 @@ function Get-OPDomain {
         } until (
             $offset -ge $total_domains
         )
+        if ($Domain) {
+            $filter = [PSCustomObject]@{
+                name      = $Domain.Split(".")[0]
+                extension = $Domain.Split(".")[1]
+            }
+            return $domains | Where-Object { $_.domain -like $filter }
+        }
+        else {
+            return $domains
+        }
     }
     catch {
         $_.code
         $_.desc
-    }
-    if ($Domain) {
-        $filter = [PSCustomObject]@{
-            name      = $Domain.Split(".")[0]
-            extension = $Domain.Split(".")[1]
-        }
-        return $domains | Where-Object { $_.domain -like $filter }
-    }
-    else {
-        return $domains
     }
 }
