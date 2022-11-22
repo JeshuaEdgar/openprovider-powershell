@@ -6,20 +6,26 @@ This module/wrapper is and will be in development (until most OpenProvider API e
 This module also has no affilation with OpenProvider, just a community project.
 
 # How to use
-### Connecting
-Connecting to OpenProvider is easy, simply run the following commands to get a connection to OpenProvider
+### Connecting/disconnecting
+Connecting to OpenProvider is easy, simply run the following commands to get a connection to OpenProvider.
 ```powershell
 Connect-OpenProvider
 # or
 $Credential = Get-Credential
 Connect-OpenProvider -Credential $Credential
 ```
+For security run the following at the end of your session/script.
+```powershell 
+Disconnect-OpenProvider
+```
 
-### Getting a domain
+### Domain
 Currently this feature is not very efficient as there is no way to search for a single domain, it is recommended to run this command with the ```-All``` switch because all the ```-Domain``` parameter does is filter the ```-All``` list. You can always filter on domains at a later moment of time.
 ```powershell
 Get-OpDomain -All
 ```
+
+### DNS Zones
 
 ## To-do:
 - Add-OPZoneRecord
