@@ -8,7 +8,7 @@
 #>
 
 
-function Get-OPZone {
+function Get-OPZoneID {
     param (
         [string]$Domain,
         [switch]$OpenProvider,
