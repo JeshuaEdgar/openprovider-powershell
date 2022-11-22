@@ -1,6 +1,5 @@
 function Get-OPDomain {
     param (
-        [parameter(Mandatory = $true)]
         [string]$Domain,
         [switch]$All
     )
