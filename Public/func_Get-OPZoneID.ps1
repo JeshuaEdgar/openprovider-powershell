@@ -10,6 +10,7 @@
 
 function Get-OPZoneID {
     param (
+        [parameter(Mandatory = $true)]
         [string]$Domain,
         [switch]$OpenProvider,
         [switch]$Sectigo
