@@ -9,7 +9,9 @@
 
 function Get-OPZoneRecord {
     param (
+        [parameter(Mandatory = $true)]
         [string]$ZoneID,
+        [parameter(Mandatory = $true)]
         [string]$Domain
     )
     $request_body = @{
