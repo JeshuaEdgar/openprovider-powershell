@@ -15,5 +15,11 @@ function Get-OPZoneRecord {
     $request_body = @{
         zone_id = $ZoneID
     }
-    return (Invoke-RestMethod -method get "https://api.openprovider.eu/v1beta/dns/zones/$($Domain)/records" -Authentication bearer -Token $op_auth_token -Body $request_body).data.results | Select-Object name, prio, ttl, type, value
+    try {
+        $ErrorActionPreference = 'Stop'
+        return (Invoke-RestMethod -method get "https://api.openprovider.eu/v1beta/dns/zones/$($Domain)/records" -Authentication bearer -Token $op_auth_token -Body $request_body).data.results | Select-Object name, prio, ttl, type, value
+    }
+    catch {
+        Write-Error "Cannot find Zone for domain $Domain"
+    }
 }
