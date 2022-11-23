@@ -30,18 +30,17 @@ Get-OpDomain -All
 ### DNS Zones
 Adding records is simple, provide a domain name, Zone ID and the value of the record. Example:
 ```powershell 
-Add-OPTXTRecord -Domain "testdomain.com" -ZoneID "12345678" -Value "v=SPF1 -all"
+Add-OPZoneRecord -Domain "testdomain.com" -ZoneID "12345678" Type TXT -Value "v=SPF1 -all"
 ```
 The following DNS records can be added through this module
-- ~~A~~
-- ~~AAAA~~
-- ~~CAA~~
-- ~~CNAME~~
-- ~~MX~~
+- A
+- AAAA
+- CAA
+- CNAME
+- MX
 - TXT
-- ~~NS~~
+- NS
 
 
 ## To-do:
-- Add-OPZoneRecord
 - Add-OPZone
