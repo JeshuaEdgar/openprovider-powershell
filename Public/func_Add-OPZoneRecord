@@ -1,11 +1,10 @@
 <#
 .SYNOPSIS
-    Add a TXT record to the Zone ID specified
+    Add a record to the Zone ID specified
 .DESCRIPTION
-    Add a TXT record to the Zone ID specified, when none is specified it will search for the Zone ID.
+    Add a record to the Zone ID specified, when none is specified it will search for the Zone ID.
 .EXAMPLE
-    Add-OPTXTRecord -Domain "testdomain.com" -ZoneID "12345678" -Value "v=SPF1 -all"
-    Explanation of the function or its result. You can include multiple examples with additional .EXAMPLE lines
+    Add-OPZoneRecord -Domain "testdomain.com" -ZoneID "12345678" -Type TXT -Value "v=SPF1 -all"
 #>
 
 function Add-OPTXTRecord {
@@ -14,7 +13,13 @@ function Add-OPTXTRecord {
         [string]$Domain,
         [string]$ZoneID,
         [parameter(Mandatory = $true)]
-        [string]$Value
+        [string]$Value,
+        [ValidateSet("A","AAAA","CAA","CNAME","MX","TXT","NS")]
+        [parameter(Mandatory = $true)]
+        [switch]$Type,
+        [ValidateSet(900,3600,10800,21600,43200,86400)] #15m, 1h, 3h, 6h, 12h, 1day
+        [int]$TTL,
+        [int]$Priority
     )
     if ([string]::IsNullOrEmpty(($ZoneID))) {
         $ErrorActionPreference = "Stop"
@@ -37,8 +42,8 @@ function Add-OPTXTRecord {
         name = $Domain
         records = @{
             add = @(@{
-                ttl = 900
-                type = "TXT"
+                ttl = $TTL
+                type = $Type
                 value = $Value
             }
             )
@@ -52,6 +57,5 @@ function Add-OPTXTRecord {
     }
     catch {
         Write-Error "Failed to create TXT record for domain $Domain"
-        return $false
     }
 }
