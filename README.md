@@ -32,6 +32,15 @@ Adding records is simple, provide a domain name, Zone ID and the value of the re
 ```powershell 
 Add-OPTXTRecord -Domain "testdomain.com" -ZoneID "12345678" -Value "v=SPF1 -all"
 ```
+The following DNS records can be added through this module
+- ~~A~~
+- ~~AAAA~~
+- ~~CAA~~
+- ~~CNAME~~
+- ~~MX~~
+- TXT
+- ~~NS~~
+
 
 ## To-do:
 - Add-OPZoneRecord
