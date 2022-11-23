@@ -28,7 +28,11 @@ Get-OpDomain -All
 ```
 
 ### DNS Zones
-Adding records is simple, provide a domain name, Zone ID and the value of the record. Example:
+Getting a zone record ID is necesary for adding and setting records, there are 2 parameters: ```-Sectigo``` and ```-OpenProvider```. to get a Zone ID for a domain run the following:
+```powershell 
+Get-OPZoneID -Domain "testdomain.com" -Sectigo
+```
+Adding records is simple, provide a domain name, Zone ID, type of record and the value. Example:
 ```powershell 
 Add-OPZoneRecord -Domain "testdomain.com" -ZoneID "12345678" Type TXT -Value "v=SPF1 -all"
 ```
@@ -40,7 +44,3 @@ The following DNS records can be added through this module
 - MX
 - TXT
 - NS
-
-
-## To-do:
-- Add-OPZone
