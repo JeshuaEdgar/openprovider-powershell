@@ -32,7 +32,8 @@ function Add-OPTXTRecord {
                 $ZoneID = Get-OPZoneID -Domain $Domain -Sectigo
             }
             catch {
-                # {1:<#Do this if a terminating exception happens#>}
+                Write-Error "Zone ID was not found for domain $Domain, please provide valid ZoneID"
+                return $false
             }
         }
     }
@@ -56,6 +57,6 @@ function Add-OPTXTRecord {
         }
     }
     catch {
-        Write-Error "Failed to create TXT record for domain $Domain"
+        Write-Error "Failed to create $Type record for domain $Domain"
     }
 }
