@@ -5,6 +5,8 @@ This module/wrapper is and will be in development (until most OpenProvider API e
 
 This module also has no affilation with OpenProvider, just a community project.
 
+PowerShell 7 is required to be able to run the functions in this module!
+
 # How to use
 ### Connecting/disconnecting
 Connecting to OpenProvider is easy, simply run the following commands to get a connection to OpenProvider.
