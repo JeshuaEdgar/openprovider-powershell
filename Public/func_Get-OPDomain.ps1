@@ -8,7 +8,6 @@ function Get-OPDomain {
 
     if ($Domain) {
         $Domain = $Domain.Split(".")[0]
-
         $domain_request_body = @{
             limit               = $limit
             domain_name_pattern = $Domain

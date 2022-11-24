@@ -14,5 +14,6 @@ function Disconnect-OpenProvider {
     }
     else {
         Write-Error "There was no active connection to OpenProvider"
+        return
     }
 }

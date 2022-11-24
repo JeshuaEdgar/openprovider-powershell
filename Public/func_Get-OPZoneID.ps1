@@ -7,7 +7,6 @@
     Get-OPZone -Domain "testdomain.com" -Sectigo
 #>
 
-
 function Get-OPZoneID {
     param (
         [parameter(Mandatory = $true)]
