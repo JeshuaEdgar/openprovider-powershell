@@ -28,15 +28,20 @@ Get-OpDomain -All
 ```
 
 ### DNS Zones
-Getting a zone record ID is necesary for adding and setting records, there are 2 parameters: ```-Sectigo``` and ```-OpenProvider```. to get a Zone ID for a domain run the following:
+Getting a zone record ID is necesary for adding and setting records, there are 2 parameters: 
+```-Sectigo``` and ```-OpenProvider```. To get a Zone ID for a domain run the following:
 ```powershell 
 Get-OPZoneID -Domain "testdomain.com" -Sectigo
+```
+With a Zone ID you can then querry the records on a domain.
+```powershell 
+Get-OPZoneRecords -Domain "testdomain.com" -ZoneID "12345678"
 ```
 Adding records is simple, provide a domain name, Zone ID, type of record and the value. Example:
 ```powershell 
 Add-OPZoneRecord -Domain "testdomain.com" -ZoneID "12345678" Type TXT -Value "v=SPF1 -all"
 ```
-The following DNS records can be added through this module
+The following DNS records can be added through this module:
 - A
 - AAAA
 - CAA
