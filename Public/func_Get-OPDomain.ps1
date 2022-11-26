@@ -3,34 +3,47 @@ function Get-OPDomain {
         [string]$Domain,
         [switch]$All
     )
-    $domains = @()
+    #variables for both requests
     $limit = 500
-    $offset = 0
-    $total_domains = (Invoke-RestMethod -Method Get "https://api.openprovider.eu/v1beta/domains" -Authentication Bearer -Token $op_auth_token).data.total
-    try {
-        do {
-            $domain_request_body = @{
-                limit  = $limit
-                offset = $offset
-            }
-            $domains += (Invoke-RestMethod -Method Get "https://api.openprovider.eu/v1beta/domains" -Authentication Bearer -Token $op_auth_token -Body $domain_request_body).data.results
-            $offset += 500
-        } until (
-            $offset -ge $total_domains
-        )
-        if ($Domain) {
-            $filter = [PSCustomObject]@{
-                name      = $Domain.Split(".")[0]
-                extension = $Domain.Split(".")[1]
-            }
-            return $domains | Where-Object { $_.domain -like $filter }
+
+    if ($Domain) {
+        $Domain = $Domain.Split(".")[0]
+        $domain_request_body = @{
+            limit               = $limit
+            domain_name_pattern = $Domain
         }
-        else {
-            return $domains
+        try {
+            $ErrorActionPreference = 'Stop'
+            $domains = (Invoke-RestMethod -Method Get "https://api.openprovider.eu/v1beta/domains" -Authentication Bearer -Token $op_auth_token -Body $domain_request_body).data.results
+        }
+        catch {
+            Write-Error "Something went wrong, could not find domain(s)"
+            Write-Error $Error[0].Exception
+            return
         }
     }
-    catch {
-        $_.code
-        $_.desc
+    
+    if ($All) {
+        $domains = @()
+        $offset = 0
+        $total_domains = (Invoke-RestMethod -Method Get "https://api.openprovider.eu/v1beta/domains" -Authentication Bearer -Token $op_auth_token).data.total
+        try {
+            do {
+                $domain_request_body = @{
+                    limit  = $limit
+                    offset = $offset
+                }
+                $domains += (Invoke-RestMethod -Method Get "https://api.openprovider.eu/v1beta/domains" -Authentication Bearer -Token $op_auth_token -Body $domain_request_body).data.results
+                $offset += 500
+            } until (
+                $offset -ge $total_domains
+            )
+        }
+        catch {
+            Write-Error "Something went wrong, could not find domains"
+            Write-Error $Error[0].Exception
+            return
+        }    
     }
+    return $domains
 }

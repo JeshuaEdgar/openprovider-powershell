@@ -11,7 +11,6 @@
     Connect-OP -Credential (Get-Credential)
 #>
 
-
 function Connect-OpenProvider {
     param(
         [pscredential]$Credential
@@ -32,7 +31,7 @@ function Connect-OpenProvider {
         return $true
     }
     catch {
-        return $false
-        $_.desc
+        Write-Error $_.desc
+        return
     }
 }

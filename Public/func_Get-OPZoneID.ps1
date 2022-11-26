@@ -7,7 +7,6 @@
     Get-OPZone -Domain "testdomain.com" -Sectigo
 #>
 
-
 function Get-OPZoneID {
     param (
         [parameter(Mandatory = $true)]
@@ -15,6 +14,9 @@ function Get-OPZoneID {
         [switch]$OpenProvider,
         [switch]$Sectigo
     )
+    if (!$Sectigo -or !$OpenProvider) {
+        Write-Error "Please select either OpenProvider or Sectigo"
+    }
     if ($Sectigo) {
         $provider = "sectigo"
     }
