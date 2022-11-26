@@ -7,14 +7,17 @@ function Get-OPDomain {
     $limit = 500
 
     if ($Domain) {
-        $Domain = $Domain.Split(".")[0]
+        $domain_name_pattern = $Domain.Split(".")[0]
         $domain_request_body = @{
             limit               = $limit
-            domain_name_pattern = $Domain
+            domain_name_pattern = $domain_name_pattern
         }
         try {
             $ErrorActionPreference = 'Stop'
             $domains = (Invoke-RestMethod -Method Get "https://api.openprovider.eu/v1beta/domains" -Authentication Bearer -Token $op_auth_token -Body $domain_request_body).data.results
+            if ($Domain.Split((".")[1])) {
+                $domains = $domains | Where-Object { $_.domain.extension -eq $Domain.Split((".")[1]) }
+            }
         }
         catch {
             Write-Error "Something went wrong, could not find domain(s)"
