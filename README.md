@@ -3,9 +3,7 @@
 ## In development
 This module is still in development, feedback is welcome and endpoint/feature requests are welcome.
 
-This module also has no affilation with OpenProvider, just a community project.
-
-PowerShell 7 is required to be able to run the functions in this module!
+This module has no affilation with OpenProvider, just a personal/community project.
 
 # How to use
 ### Connecting/disconnecting
@@ -22,9 +20,13 @@ Disconnect-OpenProvider
 ```
 
 ### Domain
-Currently this feature is not very efficient as there is no way to search for a single domain, it is recommended to run this command with the ```-All``` switch because all the ```-Domain``` parameter does is filter the ```-All``` list. You can always filter on domains at a later moment of time.
+You can search for all domains in your OpenProvider directory:
 ```powershell
 Get-OpDomain -All
+```
+Or you can search for a specific domain:
+```powershell
+Get-OpDomain -Domain "testdomain.com"
 ```
 
 ### DNS Zones
