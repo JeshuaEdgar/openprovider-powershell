@@ -16,6 +16,9 @@ function Get-OPDomain {
             $ErrorActionPreference = 'Stop'
             $domains = (Invoke-OPRequest -Method Get -Endpoint "domains" -Body $domain_request_body).data.results
             # $domains = (Invoke-RestMethod -Method Get "https://api.openprovider.eu/v1beta/domains" -Authentication Bearer -Token $op_auth_token -Body $domain_request_body).data.results
+            if ($Domain.Split((".")[1])) {
+                $domains = $domains | Where-Object { $_.domain.extension -eq $Domain.Split((".")[1]) }
+            }
         }
         catch {
             Write-Error $_.Exception
