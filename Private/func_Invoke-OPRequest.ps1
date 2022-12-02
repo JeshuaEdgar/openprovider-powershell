@@ -7,7 +7,6 @@ function Invoke-OPRequest {
         [parameter(Mandatory = $true)]
         [string]$Endpoint,
 
-        [parameter(Mandatory = $true)]
         [hashtable]$Body
 
     )
