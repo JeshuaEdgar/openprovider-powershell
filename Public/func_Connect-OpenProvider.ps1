@@ -26,9 +26,20 @@ function Connect-OpenProvider {
         username = $Credential.Username
         password = $password
     } | ConvertTo-Json
-    try {
-        Set-Variable "op_auth_token" -Value (ConvertTo-SecureString (Invoke-RestMethod -Method Post "https://api.openprovider.eu/v1beta/auth/login" -Body $token_body).data.token -AsPlainText -Force) -Scope Script
-        return $true
+    try {        
+        $Session = Invoke-RestMethod -Method Post "https://api.openprovider.eu/v1beta/auth/login" -Body $token_body
+        if ($Session.status.code -eq 0) {
+            # Set-Variable -Name OpenProviderSession.AuthToken -Value $Session.data.token -Scope Script
+            # Set-Variable -Name OpenProviderSession.TimeToRefresh -Value (Get-Date).AddDays(2) -Scope Script
+            $script:OpenProviderSession.Uri
+            $script:OpenProviderSession.AuthToken = $Session.data.token
+            $script:OpenProviderSession.TimeToRefresh = (Get-Date).AddDays(2)
+        }
+        $returnMessage = @(
+            "Welcome to OpenProvider!",
+            "Please be aware your token will expire on $($OpenProviderSession.TimeToRefresh)"
+        ) 
+        return $returnMessage
     }
     catch {
         Write-Error $_.desc
