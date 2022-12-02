@@ -14,8 +14,9 @@ function Get-OPZoneID {
         [switch]$OpenProvider,
         [switch]$Sectigo
     )
-    if (!$Sectigo -or !$OpenProvider) {
+    if (!$Sectigo -and !$OpenProvider) {
         Write-Error "Please select either OpenProvider or Sectigo"
+        continue
     }
     if ($Sectigo) {
         $provider = "sectigo"
