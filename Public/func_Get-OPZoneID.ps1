@@ -14,8 +14,9 @@ function Get-OPZoneID {
         [switch]$OpenProvider,
         [switch]$Sectigo
     )
-    if (!$Sectigo -or !$OpenProvider) {
+    if (!$Sectigo -and !$OpenProvider) {
         Write-Error "Please select either OpenProvider or Sectigo"
+        continue
     }
     if ($Sectigo) {
         $provider = "sectigo"
@@ -28,7 +29,8 @@ function Get-OPZoneID {
     }
     try {
         $ErrorActionPreference = 'Stop'
-        return (Invoke-RestMethod -method get "https://api.openprovider.eu/v1beta/dns/zones/$($Domain)" -Authentication bearer -Token $op_auth_token -Body $request_body).data.id
+        return (Invoke-OPRequest -Method Get "dns/zones/$($Domain)" -Body $request_body).data.id
+        # return (Invoke-RestMethod -method get "https://api.openprovider.eu/v1beta/dns/zones/$($Domain)" -Authentication bearer -Token $op_auth_token -Body $request_body).data.id
     }
     catch {
         Write-Error "Cannot find Zone for domain $Domain"

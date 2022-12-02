@@ -27,11 +27,19 @@ function Connect-OpenProvider {
         password = $password
     } | ConvertTo-Json
     try {
-        Set-Variable "op_auth_token" -Value (ConvertTo-SecureString (Invoke-RestMethod -Method Post "https://api.openprovider.eu/v1beta/auth/login" -Body $token_body).data.token -AsPlainText -Force) -Scope Script
-        return $true
+        #only command that does not use Invoke-OPRequest to load up the token
+        $Session = Invoke-RestMethod -Method Post "https://api.openprovider.eu/v1beta/auth/login" -Body $token_body
+        if ($Session.code -eq 0) {
+            $script:OpenProviderSession.AuthToken = $Session.data.token
+            $script:OpenProviderSession.TimeToRefresh = (Get-Date).AddDays(2)
+            $returnMessage = @(
+                Write-Output "Welcome to OpenProvider!"
+                Write-Output "Please be aware your token will expire on $($script:OpenProviderSession.TimeToRefresh)"
+            )
+            return $returnMessage
+        }
     }
     catch {
-        Write-Error $_.desc
-        return
+        Write-Error $_.Exception.Message
     }
 }
