@@ -1,3 +1,3 @@
 function Test-OpenProvider {
-    $OpenProviderSession
+    $script:OpenProviderSession
 }

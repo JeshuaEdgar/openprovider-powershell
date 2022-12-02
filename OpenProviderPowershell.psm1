@@ -6,13 +6,13 @@ Write-Verbose "Loading module $ModuleName"
 
 #load variables for module
 Write-Verbose "Creating modules variables"
-# $opSessionData = [ordered]@{
-#     Uri           = "https://api.openprovider.eu/v1beta/"
-#     AuthToken     = $null
-#     TimeToRefresh = $null
-# }
+$opSessionData = [ordered]@{
+    Uri           = "https://api.openprovider.eu/v1beta/"
+    AuthToken     = $null
+    TimeToRefresh = $null
+}
 # New-Variable -Name OpenProviderSession -Value $opSessionData -Scope Script -Force
-# $script:OpenProviderSession = $opSessionData
+$script:OpenProviderSession = $opSessionData
 #end of variables
 
 #load functions

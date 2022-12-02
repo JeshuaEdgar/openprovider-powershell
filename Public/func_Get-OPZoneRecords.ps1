@@ -19,7 +19,8 @@ function Get-OPZoneRecords {
     }
     try {
         $ErrorActionPreference = 'Stop'
-        return (Invoke-RestMethod -method get "https://api.openprovider.eu/v1beta/dns/zones/$($Domain)/records" -Authentication bearer -Token $op_auth_token -Body $request_body).data.results | Select-Object name, prio, ttl, type, value
+        # return (Invoke-RestMethod -method get "https://api.openprovider.eu/v1beta/dns/zones/$($Domain)/records" -Authentication bearer -Token $op_auth_token -Body $request_body).data.results | Select-Object name, prio, ttl, type, value
+        return (Invoke-OPRequest -Method Get "dns/zones/$($Domain)/records" -Body $request_body).data.results | Select-Object name, prio, ttl, type, value
     }
     catch {
         Write-Error "Cannot find records for domain $Domain"
