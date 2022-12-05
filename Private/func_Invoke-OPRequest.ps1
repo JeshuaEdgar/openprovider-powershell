@@ -12,6 +12,7 @@ function Invoke-OPRequest {
     )
     if ([string]::IsNullOrEmpty($script:OpenProviderSession.AuthToken)) {
         Write-Error "Please connect to OpenProvider first using: Connect-OpenProvider"
+        return $false
     }
 
     # check token status
@@ -35,6 +36,7 @@ function Invoke-OPRequest {
         return $request
     }
     catch {
-        Write-Error $_.Exception.Message
+        $output = ConvertFrom-Json $_
+        Write-Error -Message $output.desc -ErrorId $output.code
     }
 }
