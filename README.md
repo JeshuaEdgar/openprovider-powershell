@@ -19,20 +19,13 @@ For security run the following at the end of your session/script.
 Disconnect-OpenProvider
 ```
 
-### Domain
-You can search for all domains in your OpenProvider directory:
-```powershell
-Get-OpDomain -All
-```
-Or you can search for a specific domain:
-```powershell
-Get-OpDomain -Domain "testdomain.com"
-```
-
 ### DNS Zones
+
+
+### DNS Zone Records
 Getting a zone record ID is necesary for adding and setting records, there are 2 parameters: 
 ```-Sectigo``` and ```-OpenProvider```. To get a Zone ID for a domain run the following:
-```powershell 
+```powershell
 Get-OPZoneID -Domain "testdomain.com" -Sectigo
 ```
 With a Zone ID you can then querry the records on a domain.
@@ -51,3 +44,18 @@ The following DNS records can be added through this module:
 - MX
 - TXT
 - NS
+
+### Domain
+You can search for all domains in your OpenProvider directory:
+```powershell
+Get-OpDomain -All
+```
+Or you can search for a specific domain:
+```powershell
+Get-OpDomain -Domain "testdomain.com"
+```
+
+Further details of a domain can be obtained with:
+```powershell
+Get-OPDomainDetails -ID 12345678
+```
