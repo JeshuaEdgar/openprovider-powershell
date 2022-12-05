@@ -9,11 +9,9 @@ function Remove-OPNameserver {
         if ($request.data.success -eq $true) {
             return $true
         }
-        else {
-            Write-Error "Failed to remove nameserver $Name"
-        }
     }
     catch {
         $_.Exception.Message
+        Write-Error "Failed to remove nameserver $Name"
     }
 }
