@@ -31,7 +31,7 @@ function Invoke-OPRequest {
         #convert body to
         $request_body = $Body | ConvertTo-Json -Depth 4
 
-        $request = Invoke-RestMethod -Uri ($script:OpenProviderSession.Uri + $Endpoint) -Headers $bearer_token -Body $request_body
+        $request = Invoke-RestMethod -Method $Method -Uri ($script:OpenProviderSession.Uri + $Endpoint) -Headers $bearer_token -Body $request_body
         return $request
     }
     catch {
