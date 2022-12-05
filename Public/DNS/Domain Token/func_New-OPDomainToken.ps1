@@ -5,12 +5,16 @@ function New-OPDomainToken {
         [ValidateSet("OpenProvider", "Sectigo")]
         [string]$ZoneProvider
     )
-
+    
     $request_body = @{
         domain        = $Domain
         zone_provider = $ZoneProvider
     }
-
-    Invoke-OPRequest -Method Post -Endpoint "dns/domain-token" -Body $request_body
-    
+    try {
+        $request = Invoke-OPRequest -Method Post -Endpoint "dns/domain-token" -Body $request_body
+    }
+    catch {
+        $_.Exception.Message
+    }
+    return $request.data.token
 }
