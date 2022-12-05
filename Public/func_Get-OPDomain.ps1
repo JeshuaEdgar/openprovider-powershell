@@ -1,7 +1,6 @@
 function Get-OPDomain {
     param (
-        [string]$Domain,
-        [switch]$All
+        [string]$Domain
     )
     #variables for both requests
     $limit = 500
@@ -26,7 +25,7 @@ function Get-OPDomain {
         }
     }
     
-    if ($All) {
+    else {
         $domains = @()
         $offset = 0
         $total_domains = (Invoke-OPRequest -Method Get -Endpoint "domains").data.total
