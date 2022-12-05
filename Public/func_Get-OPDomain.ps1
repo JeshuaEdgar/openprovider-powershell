@@ -44,9 +44,7 @@ function Get-OPDomain {
             )
         }
         catch {
-            Write-Error "Something went wrong, could not find domains"
-            Write-Error $Error[0].Exception
-            return
+            Write-Error $_.Exception.Message
         }    
     }
     return $domains
