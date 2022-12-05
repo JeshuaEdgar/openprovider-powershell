@@ -3,9 +3,7 @@
 ## In development
 This module is still in development, feedback is welcome and endpoint/feature requests are welcome.
 
-This module also has no affilation with OpenProvider, just a community project.
-
-PowerShell 7 is required to be able to run the functions in this module!
+This module has no affilation with OpenProvider, just a personal/community project.
 
 # How to use
 ### Connecting/disconnecting
@@ -21,16 +19,13 @@ For security run the following at the end of your session/script.
 Disconnect-OpenProvider
 ```
 
-### Domain
-Currently this feature is not very efficient as there is no way to search for a single domain, it is recommended to run this command with the ```-All``` switch because all the ```-Domain``` parameter does is filter the ```-All``` list. You can always filter on domains at a later moment of time.
-```powershell
-Get-OpDomain -All
-```
-
 ### DNS Zones
+
+
+### DNS Zone Records
 Getting a zone record ID is necesary for adding and setting records, there are 2 parameters: 
 ```-Sectigo``` and ```-OpenProvider```. To get a Zone ID for a domain run the following:
-```powershell 
+```powershell
 Get-OPZoneID -Domain "testdomain.com" -Sectigo
 ```
 With a Zone ID you can then querry the records on a domain.
@@ -49,3 +44,18 @@ The following DNS records can be added through this module:
 - MX
 - TXT
 - NS
+
+### Domain
+You can search for all domains in your OpenProvider directory:
+```powershell
+Get-OpDomain -All
+```
+Or you can search for a specific domain:
+```powershell
+Get-OpDomain -Domain "testdomain.com"
+```
+
+Further details of a domain can be obtained with:
+```powershell
+Get-OPDomainDetails -ID 12345678
+```
