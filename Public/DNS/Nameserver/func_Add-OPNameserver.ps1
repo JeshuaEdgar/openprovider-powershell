@@ -4,21 +4,24 @@ function Add-OPNameServer {
         [string]$Name,
 
         [parameter(Mandatory = $true)]
-        [string]$IP
+        [string]$IP,
+
+        [string]$IPv6
     )
 
     $request_body = @{
         name = $Name
         ip   = $IP
     }
+    if ($IPv6) {
+        $request_body.ip6 = $IPv6
+    }
 
     try {
         $request = Invoke-OPRequest -Method Post -Endpoint "dns/nameservers" -Body $request_body
-        if ($request.code -eq 0) {
-            Write-Output "Nameserver $Name created succesfully!"
-        }
-        else {
-            Write-Output $return.desc
+        if (($request.data.name -eq $Name) -and ($request.data.ip -eq $IP) -and ($request.data.ip6 -eq $IPv6)) {
+            Write-Host "Nameserver $Name created succesfully!"
+            return $true
         }
     }
     catch {
