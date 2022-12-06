@@ -40,7 +40,7 @@ function Update-OPZone {
     }
 
     try {
-        $request = Invoke-OPRequest -Method Post -Endpoint "dns/zones/$Domain" -Body $request_body
+        $request = Invoke-OPRequest -Method Put -Endpoint "dns/zones/$Domain" -Body $request_body
         if ($request.code -eq 0) {
             Write-Host "Succesfully update the zone for $Domain"
         }
