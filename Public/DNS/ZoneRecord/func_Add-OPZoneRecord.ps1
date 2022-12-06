@@ -80,7 +80,6 @@ function Add-OPZoneRecord {
     #compile request body into JSON for the request
     $request_body = $request_body | ConvertTo-Json -Depth 3
     try {
-        # if ((Invoke-WebRequest -Method Put -Uri "https://api.openprovider.eu/v1beta/dns/zones/$($Domain)" -Authentication Bearer -Token $op_auth_token -Body $request_body).StatusCode -eq 200) {
         if ((Invoke-OPRequest -Method Put -Uri "dns/zones/$($Domain)" -Body $request_body).StatusCode -eq 200) {
             return $true
         }
