@@ -30,7 +30,7 @@
     Copyright         = '(c) JeshuaEdgar. All rights reserved.'
 
     # Description of the functionality provided by this module
-    # Description = ''
+    Description       = 'This module is a wrapper for the OpenProvider API, you will be able to use powrshell logic with your domain/DNS management'
 
     # Minimum version of the PowerShell engine required by this module
     PowerShellVersion = '5.1'
