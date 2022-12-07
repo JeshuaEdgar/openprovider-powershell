@@ -1,10 +1,12 @@
 # OpenProviderPowershell
 
-## In development
-
-This module is still in development, feedback is welcome and endpoint/feature requests are welcome.
-
 ## How to use
+
+OpenProviderPowershell is available on PowerShellGallery! To install:
+
+```powershell
+Install-Module OpenProviderPowershell
+```
 
 ### Connecting/disconnecting
 
@@ -115,3 +117,7 @@ ohandthisone.nl  free   EUR       3.190
 ## Disclaimer
 
 This module has no affilation with OpenProvider, just a personal/community project.
+
+This module is still in development, feedback is welcome and endpoint/feature requests are welcome.
+
+Please refer to [OpenProvider API Docs](https://docs.openprovider.com/doc/all) for feature/endpoint requests.
