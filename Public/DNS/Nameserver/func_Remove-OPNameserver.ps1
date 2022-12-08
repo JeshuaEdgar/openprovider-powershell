@@ -11,7 +11,6 @@ function Remove-OPNameserver {
         }
     }
     catch {
-        $_.Exception.Message
-        Write-Error "Failed to remove nameserver $Name"
+        Write-Error $_.Exception.Message
     }
 }

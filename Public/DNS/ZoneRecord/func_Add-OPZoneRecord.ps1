@@ -85,8 +85,6 @@ function Add-OPZoneRecord {
         }
     }
     catch {
-        Write-Error $Error[0].Exception
-        Write-Error "Failed to create $Type record for domain $Domain"
-        return
+        Write-Error $_.Exception.Message
     }
 }

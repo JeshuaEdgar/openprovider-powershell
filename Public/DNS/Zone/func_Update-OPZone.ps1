@@ -46,6 +46,6 @@ function Update-OPZone {
         }
     }
     catch {
-        $_.Exception.Message    
+        Write-Error $_.Exception.Message    
     }
 }

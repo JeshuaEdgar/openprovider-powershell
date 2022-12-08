@@ -25,6 +25,6 @@ function Add-OPNameServer {
         }
     }
     catch {
-        $_.Exception.Message
+        Write-Error $_.Exception.Message
     }
 }

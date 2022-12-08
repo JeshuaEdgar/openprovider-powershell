@@ -14,7 +14,7 @@ function New-OPDomainToken {
         $request = Invoke-OPRequest -Method Post -Endpoint "dns/domain-token" -Body $request_body
     }
     catch {
-        $_.Exception.Message
+        Write-Error $_.Exception.Message
     }
     return $request.data.token
 }

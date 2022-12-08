@@ -22,6 +22,6 @@ function Get-OPZoneRecords {
         return (Invoke-OPRequest -Method Get "dns/zones/$($Domain)/records" -Body $request_body).data.results | Select-Object name, prio, ttl, type, value
     }
     catch {
-        Write-Error "Cannot find records for domain $Domain"
+        Write-Error $_.Exception.Message
     }
 }
