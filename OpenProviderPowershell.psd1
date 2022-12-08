@@ -12,7 +12,7 @@
     RootModule        = '.\OpenProviderPowershell.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.0.0'
+    ModuleVersion     = '1.0.1'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -69,7 +69,26 @@
     # NestedModules = @()
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-    FunctionsToExport = @()
+    FunctionsToExport = @(
+        "Connect-OpenProvider",
+        "Disconnect-OpenProvider",
+        "New-OPDomainToken",
+        "Add-OPNameserver",
+        "Get-OPNameserver",
+        "Remove-OPNameserver",
+        "Update-OPNameserver",
+        "Get-OPZone",
+        "New-OPZone",
+        "Remove-OPZone",
+        "Update-OPZone",
+        "Add-OPZoneRecord",
+        "Get-OPZoneRecords",
+        "New-OPZoneRecordObject",
+        "Set-OPZoneRecord",
+        "Get-OPDomain",
+        "Get-OPDomainAvailability",
+        "Get-OPDomainDetails"
+    )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
     CmdletsToExport   = @()
