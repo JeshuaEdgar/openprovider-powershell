@@ -25,18 +25,28 @@ For security run the following at the end of your session/script.
 Disconnect-OpenProvider
 ```
 
-### DNS Zones
+### Nameservers
 
-### DNS Zone Records
+You are able to add, get, remove and update OpenProvider nameservers.
 
-Getting a zone record ID is necesary for adding and setting records, there are 2 parameters: 
-```-Sectigo``` and ```-OpenProvider```. To get a Zone ID for a domain run the following:
+Note: to add nameservers, you must have the domain in your OpenProvider portal
 
 ```powershell
-Get-OPZoneID -Domain "testdomain.com" -Sectigo
+Add-OPNameserver -Name "ns1.testdomain.com" -IP "123.456.789.10"
+Get-OPNameserver
+Remove-OPNameserver -Name "ns1.testdomain.com"
+Update-OPNameserver -Name "ns1.testdomain.com" -IP "10.987.654.32"
 ```
 
-With a Zone ID you can then querry the records on a domain.
+### DNS Zones
+
+Getting a zone is necesary for adding and setting records. To get a Zone ID for a domain run the following:
+
+```powershell
+Get-OPZone -Domain "testdomain.com"
+```
+
+With a Zone ID, which you get from the above command, you can then querry the records on a domain.
 
 ```powershell
 Get-OPZoneRecords -Domain "testdomain.com" -ZoneID "12345678"
@@ -71,15 +81,10 @@ Set-OPZoneRecord -Domain $domain -ZoneID $zone.id -OriginalRecord $original_reco
 
 ### Domain
 
-You can search for all domains in your OpenProvider directory:
+You can search for all domains in your OpenProvider directory, or you can search for a specific domain:
 
 ```powershell
 Get-OpDomain -All
-```
-
-Or you can search for a specific domain:
-
-```powershell
 Get-OpDomain -Domain "testdomain.com"
 ```
 
@@ -89,7 +94,7 @@ Further details of a domain can be obtained with:
 Get-OPDomainDetails -ID 12345678
 ```
 
-Availability and pricing for a domain can be checked like this, multiple domains are accepted (they must be in a list like the example below):
+Availability and pricing for a domain can be checked with the following command, multiple domains are accepted (they must be in a list like the example below):
 
 ```powershell
 $domainlist = @(
