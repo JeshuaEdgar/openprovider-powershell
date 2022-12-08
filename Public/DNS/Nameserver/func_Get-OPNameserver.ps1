@@ -10,7 +10,7 @@ function Get-OPNameServer {
         $request_body.ip = $IP
     }
     try {
-        $request = Invoke-OPRequest -Method Get -Endpoint "dns/nameservers" -Body $request_body
+        $request = Invoke-OPRequest -Method Get -Endpoint "dns/nameservers" -Body $request_body -ErrorAction Stop
         if ([int]$request.data.total -eq 0) {
             Write-Warning "No nameservers found"
         }
@@ -19,6 +19,6 @@ function Get-OPNameServer {
         }
     }
     catch {
-        $_.Exception.Message
+        Write-Error $_.Exception.Message
     }
 }
