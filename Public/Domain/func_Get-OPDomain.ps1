@@ -40,5 +40,24 @@ function Get-OPDomain {
             Write-Error $_.Exception.Message
         }    
     }
-    return $domains
+    
+    #Return object, sort clutter from domains
+    if ($domains.Count -ge 1) {
+        $return_object = @()
+        $i = 0
+        foreach ($item in $domains) {
+            $domain_object = @{
+                Domain         = ($domains[$i].domain.name, $domains[$i].domain.extension) -join "."
+                ID             = $domains[$i].id
+                ExpirationDate = $domains[$i].expiration_date
+                Sectigo        = $domains[$i].is_sectigo_dns_enabled
+            }
+            $return_object += $domain_object
+            $i++
+        }
+        return $return_object
+    }
+    else {
+        Write-Warning "Not able to find any domains with $Domain as search query"
+    }
 }
