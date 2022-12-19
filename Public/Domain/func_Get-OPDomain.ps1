@@ -40,16 +40,18 @@ function Get-OPDomain {
             Write-Error $_.Exception.Message
         }    
     }
-    
+
     #Return object, sort clutter from domains
     if ($domains.Count -ge 1) {
         $return_object = @()
         $i = 0
         foreach ($item in $domains) {
-            $domain_object = @{
-                Domain         = ($domains[$i].domain.name, $domains[$i].domain.extension) -join "."
+            $domain_object = [pscustomobject]@{
                 ID             = $domains[$i].id
-                ExpirationDate = $domains[$i].expiration_date
+                Domain         = ($domains[$i].domain.name, $domains[$i].domain.extension) -join "."
+                CreationDate   = [DateTime]$domains[$i].creation_date
+                ExpirationDate = [DateTime]$domains[$i].expiration_date
+                AutoRenew      = $domains[$i].autorenew
                 Sectigo        = $domains[$i].is_sectigo_dns_enabled
             }
             $return_object += $domain_object
