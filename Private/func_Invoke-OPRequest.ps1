@@ -29,9 +29,7 @@ function Invoke-OPRequest {
         $bearer_token = @{
             Authorization = "Bearer $($OpenProviderSession.AuthToken)"
         }
-        #convert body to
-        $request_body = $Body | ConvertTo-Json -Depth 4
-
+        $request_body = $Body
         $request = Invoke-RestMethod -Method $Method -Uri ($script:OpenProviderSession.Uri + $Endpoint) -Headers $bearer_token -Body $request_body
         return $request
     }
