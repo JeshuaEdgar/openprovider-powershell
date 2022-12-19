@@ -84,7 +84,7 @@ Set-OPZoneRecord -Domain $domain -ZoneID $zone.id -OriginalRecord $original_reco
 You can search for all domains in your OpenProvider directory, or you can search for a specific domain:
 
 ```powershell
-Get-OpDomain -All
+Get-OpDomain
 Get-OpDomain -Domain "testdomain.com"
 ```
 

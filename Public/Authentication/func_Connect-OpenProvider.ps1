@@ -18,9 +18,15 @@ function Connect-OpenProvider {
     if (!$Credential) {
         $credential = Get-Credential
     }
-    $encrypted_data = ConvertFrom-SecureString $Credential.Password
-    $password_securestring = ConvertTo-SecureString $encrypted_data
-    $password = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password_securestring))
+    try {
+        $encrypted_data = ConvertFrom-SecureString $Credential.Password
+        $password_securestring = ConvertTo-SecureString $encrypted_data
+        $password = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password_securestring))
+    }
+    catch {
+        Write-Error $_.Exception.Message
+        return
+    }
 
     $token_body = @{
         username = $Credential.Username

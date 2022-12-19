@@ -8,8 +8,9 @@
 #>
 
 function Disconnect-OpenProvider {
-    if ($op_auth_token) {
-        Remove-Variable op_auth_token -Scope Script
+    if (-not [string]::IsNullOrEmpty($script:OpenProviderSession.AuthToken)) {
+        $script:OpenProviderSession.AuthToken = $null
+        $script:OpenProviderSession.TimeToRefresh = $null
         return $true
     }
     else {
