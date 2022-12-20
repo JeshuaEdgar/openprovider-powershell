@@ -10,32 +10,41 @@ function Invoke-OPRequest {
         [hashtable]$Body
 
     )
+    $functionCallStack = (Get-PSCallStack | Select-Object -ExpandProperty FunctionName)[1]
+    $functionExceptions = @("Connect-OpenProvider")
+    
     if ([string]::IsNullOrEmpty($script:OpenProviderSession.AuthToken)) {
-        Write-Error "Please connect to OpenProvider first using: Connect-OpenProvider"
-        return $false
+        if ($functionCallStack -notin $functionExceptions) {
+            Write-Error "Please connect to OpenProvider first using: Connect-OpenProvider"
+            return $false
+        }
     }
 
-    # check token status
-    $twohours = 120
-    [int]$timespan = (New-TimeSpan -Start (Get-Date) -End $script:OpenProviderSession.TimeToRefresh).TotalMinutes
-    if ($timespan -le $twohours) {
-        Write-Warning "Your token will expire in $timespan hours"
-    }
-    elseif ($timespan -le 0) {
-        Write-Error "Token expired, please renew token using: Connect-OpenProvider"
+    if ($functionCallStack -notin $functionExceptions) {
+        # check token status
+        $twohours = 120
+        [int]$timespan = (New-TimeSpan -Start (Get-Date) -End $script:OpenProviderSession.TimeToRefresh).TotalMinutes
+        if ($timespan -le $twohours) {
+            Write-Warning "Your token will expire in $timespan minutes"
+        }
+        elseif ($timespan -le 0) {
+            Write-Error "Token expired, please renew token using: Connect-OpenProvider"
+        }
     }
 
     try {
-        $bearer_token = @{
-            Authorization = "Bearer $($OpenProviderSession.AuthToken)"
+        $request_splat = @{
+            Method = $Method
+            Uri    = ($script:OpenProviderSession.Uri + $Endpoint)
+            Body   = $Body | ConvertTo-Json -Depth 4
         }
-        $request_body = $Body | ConvertTo-Json -Depth 4
-        $request = Invoke-RestMethod -Method $Method -Uri ($script:OpenProviderSession.Uri + $Endpoint) -Headers $bearer_token -Body $request_body
+        if ($functionCallStack -notin $functionExceptions) {
+            $request_splat.Headers += @{ Authorization = "Bearer $($OpenProviderSession.AuthToken)" }
+        }
+        $request = Invoke-RestMethod @request_splat
         return $request
     }
     catch {
-        $errorCode = $_.Exception.Response.StatusCode.value__  # this works
-        $errorDesc = (($_.ErrorDetails.Message | ConvertFrom-Json).desc)
-        Write-Error -Message ("Error: $errorCode! $errorDesc")
+        Write-Error -Message ((Format-ErrorCodes $_).ErrorMessage)
     }
 }
