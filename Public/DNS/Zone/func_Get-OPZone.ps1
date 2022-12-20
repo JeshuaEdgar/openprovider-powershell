@@ -47,6 +47,20 @@ function Get-OPZone {
     if (($Domain) -and ([string]::IsNullOrEmpty($zones))) {
         Write-Warning "No zones found for domain $Domain"
     }
-    return $zones
+
+    $return_object = @()
+    $i = 0
+    foreach ($item in $zones) {
+        $zone_object = [pscustomobject]@{
+            ID               = $zones[$i].id
+            Domain           = $zones[$i].name
+            CreationDate     = [DateTime]$zones[$i].creation_date
+            ModificationDate = [DateTime]$zones[$i].modification_date
+            Provider         = $zones[$i].provider
+        }
+        $return_object += $zone_object
+        $i++
+    }
+    return $return_object
 }
 
