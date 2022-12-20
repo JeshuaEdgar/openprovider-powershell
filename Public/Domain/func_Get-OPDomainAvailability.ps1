@@ -21,18 +21,13 @@ function Get-OPDomainAvailability {
         $return_object = @()
         foreach ($domain in $request.data.results) {
             $domain_data = [PSCustomObject]@{
-                domain        = $domain.domain
-                status        = $domain.status
-                currency      = $domain.price.reseller.currency
-                price         = [single]$domain.price.reseller.price
-                premium       = $domain.is_premium
-                premium_price = [single]$domain.premium.price.create
+                Domain       = $domain.domain
+                Status       = $domain.status
+                Currency     = $domain.price.reseller.currency
+                Price        = [single]$domain.price.reseller.price
+                Premium      = $domain.is_premium
+                PremiumPrice = [single]$domain.premium.price.create
             }
-            # if ($domain.is_premium -eq $true) {
-            #     $domain_data | Add-Member -NotePropertyMembers @{premium = $domain.is_premium }
-            #     $domain_data | Add-Member -NotePropertyMembers @{premium_price = $domain.premium.price.create }
-            # }
-
             $return_object += $domain_data
         }
         return $return_object
