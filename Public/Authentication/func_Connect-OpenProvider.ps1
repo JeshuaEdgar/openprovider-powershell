@@ -31,10 +31,10 @@ function Connect-OpenProvider {
     $token_body = @{
         username = $Credential.Username
         password = $password
-    } | ConvertTo-Json
+    }
+
     try {
-        #only command that does not use Invoke-OPRequest to load up the token
-        $Session = Invoke-RestMethod -Method Post "https://api.openprovider.eu/v1beta/auth/login" -Body $token_body
+        $Session = Invoke-OPRequest -Method Post -Endpoint "auth/login" -Body $token_body
         if ($Session.code -eq 0) {
             $script:OpenProviderSession.AuthToken = $Session.data.token
             $script:OpenProviderSession.TimeToRefresh = (Get-Date).AddDays(2)
