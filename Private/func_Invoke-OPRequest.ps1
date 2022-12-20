@@ -29,12 +29,13 @@ function Invoke-OPRequest {
         $bearer_token = @{
             Authorization = "Bearer $($OpenProviderSession.AuthToken)"
         }
-        $request_body = $Body
+        $request_body = $Body | ConvertTo-Json -Depth 4
         $request = Invoke-RestMethod -Method $Method -Uri ($script:OpenProviderSession.Uri + $Endpoint) -Headers $bearer_token -Body $request_body
         return $request
     }
     catch {
-        $output = ConvertFrom-Json $_
-        Write-Error -Message $output.desc -ErrorId $output.code
+        $errorCode = $_.Exception.Response.StatusCode.value__  # this works
+        $errorDesc = (($_.ErrorDetails.Message | ConvertFrom-Json).desc)
+        Write-Error -Message ("Error: $errorCode! $errorDesc")
     }
 }
