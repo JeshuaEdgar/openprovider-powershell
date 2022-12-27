@@ -25,7 +25,7 @@ function Get-OPDomainAvailability {
                 Status       = $domain.status
                 Currency     = $domain.price.reseller.currency
                 Price        = [single]$domain.price.reseller.price
-                Premium      = $domain.is_premium
+                Premium      = if ($domain.is_premium -eq $true) { $true }else { $false }
                 PremiumPrice = [single]$domain.premium.price.create
             }
             $return_object += $domain_data
