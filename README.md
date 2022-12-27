@@ -19,6 +19,8 @@ $Credential = Get-Credential
 Connect-OpenProvider -Credential $Credential
 ```
 
+Connecting to the sandbox environment is now possible too! Just add ```-Sandbox``` to Connect-OpenProvider.
+
 For security run the following at the end of your session/script.
 
 ```powershell
@@ -84,15 +86,10 @@ Set-OPZoneRecord -Domain $domain -ZoneID $zone.id -OriginalRecord $original_reco
 You can search for all domains in your OpenProvider directory, or you can search for a specific domain:
 
 ```powershell
-Get-OpDomain
 Get-OpDomain -Domain "testdomain.com"
 ```
 
-Further details of a domain can be obtained with:
-
-```powershell
-Get-OPDomainDetails -ID 12345678
-```
+For a more detailed report such as nameservers connected to the domain epiry dates or renewal information add the ```-Detailed``` option.
 
 Availability and pricing for a domain can be checked with the following command, multiple domains are accepted (they must be in a list like the example below):
 
