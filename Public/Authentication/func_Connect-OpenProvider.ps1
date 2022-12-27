@@ -13,7 +13,9 @@
 
 function Connect-OpenProvider {
     param(
-        [pscredential]$Credential
+        [pscredential]$Credential,
+
+        [switch]$Sandbox
     )
     if (!$Credential) {
         $credential = Get-Credential
@@ -31,6 +33,11 @@ function Connect-OpenProvider {
     $token_body = @{
         username = $Credential.Username
         password = $password
+    }
+
+    if ($Sandbox) {
+        # Set the sandbox URI
+        $script:OpenProviderSession.Uri = "http://api.sandbox.openprovider.nl:8480/v1beta/"
     }
 
     try {
