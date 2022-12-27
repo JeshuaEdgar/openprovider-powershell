@@ -1,21 +1,21 @@
 function Get-OPDomain {
     param (
-        [string]$Domain
+        [string]$Domain,
+
+        [switch]$Detailed
     )
     #variables for both requests
     $limit = 500
 
-    if ($Domain) {
+    if ($Domain -ne "") {
         $domain_request_body = @{
-            limit     = $limit
             full_name = $Domain
         }
         try {
-            $ErrorActionPreference = 'Stop'
             $domains = (Invoke-OPRequest -Method Get -Endpoint "domains" -Body $domain_request_body).data.results
         }
         catch {
-            Write-Error $_.Exception
+            Write-Error $_.Exception.Message
             return
         }
     }
@@ -38,6 +38,7 @@ function Get-OPDomain {
         }
         catch {
             Write-Error $_.Exception.Message
+            return
         }    
     }
 
@@ -47,12 +48,22 @@ function Get-OPDomain {
         $i = 0
         foreach ($item in $domains) {
             $domain_object = [pscustomobject]@{
-                ID             = $domains[$i].id
-                Domain         = ($domains[$i].domain.name, $domains[$i].domain.extension) -join "."
-                CreationDate   = [DateTime]$domains[$i].creation_date
-                ExpirationDate = [DateTime]$domains[$i].expiration_date
-                AutoRenew      = $domains[$i].autorenew
-                Sectigo        = $domains[$i].is_sectigo_dns_enabled
+                ID     = $domains[$i].id
+                Domain = ($domains[$i].domain.name, $domains[$i].domain.extension) -join "."
+                
+            }
+            if ($Detailed) {
+                $domain_object | Add-Member @{
+                    ResellerID      = $domains[$i].reseller_id
+                    CreationDate    = [DateTime]$domains[$i].creation_date
+                    ExpirationDate  = [DateTime]$domains[$i].expiration_date
+                    AutoRenew       = $domains[$i].autorenew
+                    RenewalDate     = [DateTime]$domains[$i].renewal_date
+                    WhoIs           = $domains[$i].is_hosted_whois
+                    DNSSec          = $domains[$i].is_dnssec_enabled
+                    Sectigo         = $domains[$i].is_sectigo_dns_enabled
+                    NameserverGroup = $domains[$i].ns_group
+                }
             }
             $return_object += $domain_object
             $i++
