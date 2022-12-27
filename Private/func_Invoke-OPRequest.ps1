@@ -1,5 +1,7 @@
 function Invoke-OPRequest {
     param (
+        [CmdletBinding()]
+
         [ValidateSet("Delete", "Get", "Patch", "Post", "Put")]
         [parameter(Mandatory = $true)]
         [string]$Method,
@@ -15,8 +17,7 @@ function Invoke-OPRequest {
     
     if ([string]::IsNullOrEmpty($script:OpenProviderSession.AuthToken)) {
         if ($functionCallStack -notin $functionExceptions) {
-            Write-Error "Please connect to OpenProvider first using: Connect-OpenProvider"
-            return $false
+            throw "Please connect to OpenProvider first using: Connect-OpenProvider"
         }
     }
 
@@ -28,7 +29,7 @@ function Invoke-OPRequest {
             Write-Warning "Your token will expire in $timespan minutes"
         }
         elseif ($timespan -le 0) {
-            Write-Error "Token expired, please renew token using: Connect-OpenProvider"
+            throw "Token expired, please renew token using: Connect-OpenProvider"
         }
     }
 
@@ -38,13 +39,30 @@ function Invoke-OPRequest {
             Uri    = ($script:OpenProviderSession.Uri + $Endpoint)
             Body   = $Body | ConvertTo-Json -Depth 4
         }
+        # check if get method + query params (powershell 5.1 compatibility)
+        if ($Method -eq "Get" -and $Body) {
+            $request_splat.Uri = ($script:OpenProviderSession.Uri + $Endpoint + (New-QueryString -Parameters $Body))
+        }
+        # check if command is not being called from $functionExceptions
         if ($functionCallStack -notin $functionExceptions) {
             $request_splat.Headers += @{ Authorization = "Bearer $($OpenProviderSession.AuthToken)" }
         }
+        # Write-Host $request_splat
         $request = Invoke-RestMethod @request_splat
         return $request
     }
+
     catch {
-        Write-Error -Message ((Format-ErrorCodes $_).ErrorMessage)
+        if ($_.Exception -is [System.Net.WebException]) {
+            throw (Format-ErrorCodes $_).ErrorMessage
+        }
+        elseif ($_.Exception -is [Microsoft.PowerShell.Commands.HttpResponseException]) {
+            throw (Format-ErrorCodes $_).ErrorMessage
+        }
+        else {
+            Write-Host "New error not being caught yet!"
+            Write-Host $_.Exception.Message -ForegroundColor Yellow
+            Write-Host $_.Exception.GetType().FullName -ForegroundColor Yellow
+        }
     }
 }
