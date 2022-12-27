@@ -4,7 +4,7 @@ function New-OPZone {
         [string]$Domain,
 
         [parameter(Mandatory = $true)]
-        [ValidateSet("OpenProvider", "Sectigo")]
+        [ValidateSet("openprovider", "sectigo")]
         [string]$Provider,
 
         [array]$Records
