@@ -1,20 +1,25 @@
 function Get-OPZone {
     param (
-        [string]$Domain
+        [string]$Domain,
+
+        [ValidateSet("openprovider", "sectigo")]
+        [string]$Provider
     )
     $limit = 500
     if ($Domain) {
-        #We have to split the domain to search for the domain, filtering is done afterwards
-        $domain_name_pattern = $Domain.Split(".")[0]
-        $request_body = @{
-            name_pattern = $domain_name_pattern
-        }
         try {
-            $request = Invoke-OPRequest -Method Get -Endpoint "dns/zones" -Body $request_body
-            $zones = $request.data.results | Where-Object { $_.name -eq $Domain }
+            $zone_splat = @{
+                Method   = "Get"
+                Endpoint = "dns/zones/$Domain"
+            }
+            if ($Provider) {
+                $zone_splat.Body += @{provider = $Provider }
+            }
+            $zones = (Invoke-OPRequest @zone_splat).data
         }
         catch {
             Write-Error $_.Exception.Message
+            return
         }
     }
     #all domains
@@ -29,6 +34,10 @@ function Get-OPZone {
                         limit  = $limit
                         offset = $offset
                     }
+                    if ($Provider) {
+                        $request_body += @{provider = $Provider }
+                    }
+                    Write-Host "this is a test"
                     $zones += (Invoke-OPRequest -Method Get -Endpoint "dns/zones" -Body $request_body).data.results
                     $offset += 500
                 } until (
@@ -36,27 +45,30 @@ function Get-OPZone {
                 )
             }
             else {
+                $request_body = @{
+                    limit = $limit
+                }
+                if ($Provider) {
+                    $request_body += @{provider = $Provider }
+                }
                 $zones = (Invoke-OPRequest -Method Get -Endpoint "dns/zones" -Body $request_body).data.results
             }
-	
         }
         catch {
             Write-Error $_.Exception.Message
+            return
         }    
-    }
-    if (($Domain) -and ([string]::IsNullOrEmpty($zones))) {
-        Write-Warning "No zones found for domain $Domain"
     }
 
     $return_object = @()
     $i = 0
     foreach ($item in $zones) {
         $zone_object = [pscustomobject]@{
-            ID               = $zones[$i].id
-            Domain           = $zones[$i].name
-            CreationDate     = [DateTime]$zones[$i].creation_date
-            ModificationDate = [DateTime]$zones[$i].modification_date
-            Provider         = $zones[$i].provider
+            ZoneID   = $zones[$i].id
+            Domain   = $zones[$i].name            
+            Provider = $zones[$i].provider
+            Type     = $zones[$i].type
+            Active   = $zones[$i].active
         }
         $return_object += $zone_object
         $i++
