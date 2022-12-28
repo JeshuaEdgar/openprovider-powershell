@@ -2,9 +2,9 @@
 .SYNOPSIS
     Get the Zone record(s) for a domain
 .DESCRIPTION
-    Get the Zone record(s) for a domain, use a Zone ID with your request
+    Get the Zone record(s) for a domain, optionally specify a zone provider with your request
 .EXAMPLE
-    Get-OPZoneRecord -ZoneID "12345678" -Domain "testdomain.com"
+    Get-OPZoneRecord -Domain "testdomain.com" -Provider sectigo
 #>
 
 function Get-OPZoneRecords {
@@ -12,24 +12,34 @@ function Get-OPZoneRecords {
         [parameter(Mandatory = $true)]
         [string]$Domain,
 
-        [parameter(Mandatory = $true)]
-        [string]$ZoneID
+        [ValidateSet("openprovider", "sectigo")]
+        [string]$Provider
     )
-    $request_body = @{
-        zone_id = $ZoneID
+
+    $request_splat = @{
+        Method   = "Get"
+        Endpoint = "dns/zones/$($Domain)/records"
     }
+    if ($Provider) {
+        $request_splat.Body += @{zone_provider = $Provider }
+    }
+    
     try {
-        $request = (Invoke-OPRequest -Method Get "dns/zones/$($Domain)/records" -Body $request_body).data.results
-        
-        $return_object = @()
-        $request | ForEach-Object {
-            $return_object += [PSCustomObject]@{
-                Name     = $_.name
-                Priority = $_.prio
-                TTL      = $_.ttl
-                Type     = $_.type
-                Value    = $_.value
+        $request = Invoke-OPRequest @request_splat
+        if ($request.data.total -gt 0) {
+            $return_object = @()
+            $request.data.results | ForEach-Object {
+                $return_object += [PSCustomObject]@{
+                    Name     = $_.name
+                    Priority = $_.prio
+                    TTL      = $_.ttl
+                    Type     = $_.type
+                    Value    = $_.value
+                }
             }
+        }
+        else {
+            Write-Output "No zone records found for domain $Domain"
         }
     }
     catch {
