@@ -70,24 +70,24 @@
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport = @(
-        "Connect-OpenProvider",
-        "Disconnect-OpenProvider",
-        "New-OPDomainToken",
-        "Add-OPNameserver",
-        "Get-OPNameserver",
-        "Remove-OPNameserver",
-        "Update-OPNameserver",
         "Get-OPZone",
         "New-OPZone",
         "Remove-OPZone",
         "Update-OPZone",
+        "Add-OPNameserver",
+        "Get-OPNameserver",
+        "Remove-OPNameserver",
+        "Update-OPNameserver",
         "Add-OPZoneRecord",
         "Get-OPZoneRecords",
         "New-OPZoneRecordObject",
         "Set-OPZoneRecord",
+        "New-OPDomainToken",
         "Get-OPDomain",
         "Get-OPDomainAvailability",
-        "Get-OPDomainDetails"
+        "Update-OPDomain",
+        "Connect-OpenProvider",
+        "Disconnect-OpenProvider"
     )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
