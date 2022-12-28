@@ -19,9 +19,21 @@ function Get-OPZoneRecords {
         zone_id = $ZoneID
     }
     try {
-        return (Invoke-OPRequest -Method Get "dns/zones/$($Domain)/records" -Body $request_body).data.results | Select-Object name, prio, ttl, type, value
+        $request = (Invoke-OPRequest -Method Get "dns/zones/$($Domain)/records" -Body $request_body).data.results
+        
+        $return_object = @()
+        $request | ForEach-Object {
+            $return_object += [PSCustomObject]@{
+                Name     = $_.name
+                Priority = $_.prio
+                TTL      = $_.ttl
+                Type     = $_.type
+                Value    = $_.value
+            }
+        }
     }
     catch {
         Write-Error $_.Exception.Message
     }
+    return $return_object
 }
