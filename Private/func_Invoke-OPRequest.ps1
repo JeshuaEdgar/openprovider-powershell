@@ -37,11 +37,13 @@ function Invoke-OPRequest {
         $request_splat = @{
             Method = $Method
             Uri    = ($script:OpenProviderSession.Uri + $Endpoint)
-            Body   = $Body | ConvertTo-Json -Depth 4
         }
         # check if get method + query params (powershell 5.1 compatibility)
         if ($Method -eq "Get" -and $Body) {
             $request_splat.Uri = ($script:OpenProviderSession.Uri + $Endpoint + (New-QueryString -Parameters $Body))
+        }
+        else {
+            $request_splat.Body += $Body | ConvertTo-Json -Depth 4
         }
         # check if command is not being called from $functionExceptions
         if ($functionCallStack -notin $functionExceptions) {
@@ -53,10 +55,16 @@ function Invoke-OPRequest {
     }
 
     catch {
+        $pwshVersion = $PSversionTable.PSEdition
+        # pwsh 5.1
         if ($_.Exception -is [System.Net.WebException]) {
-            throw (Format-ErrorCodes $_).ErrorMessage
+            $reader = New-Object System.IO.StreamReader($_.Exception.Response.GetResponseStream())
+            $reader.BaseStream.Position = 0
+            $reader.DiscardBufferedData()
+            throw (Format-ErrorCodes $reader.ReadToEnd()).ErrorMessage
         }
-        elseif ($_.Exception -is [Microsoft.PowerShell.Commands.HttpResponseException]) {
+        # pwsh 7.x
+        elseif ($pwshVersion -eq "Core" -and $_.Exception -is [Microsoft.PowerShell.Commands.HttpResponseException]) {
             throw (Format-ErrorCodes $_).ErrorMessage
         }
         else {
