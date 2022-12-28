@@ -14,7 +14,7 @@ function Format-ErrorCodes {
                 $ErrorObject = New-Object System.IO.StreamReader($ErrorObject.Exception.Response.GetResponseStream())
                 $ErrorObject.BaseStream.Position = 0 
                 $ErrorObject.DiscardBufferedData() 
-                $ErrorObject.ReadToEnd()
+                $ErrorObject = $ErrorObject.ReadToEnd()
             }
             "Core" { $ErrorObject = $ErrorObject.ErrorDetails.Message }
         }

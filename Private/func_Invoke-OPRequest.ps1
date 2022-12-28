@@ -55,22 +55,6 @@ function Invoke-OPRequest {
     }
 
     catch {
-        $pwshVersion = $PSversionTable.PSEdition
-        # pwsh 5.1
-        if ($_.Exception -is [System.Net.WebException]) {
-            $reader = New-Object System.IO.StreamReader($_.Exception.Response.GetResponseStream())
-            $reader.BaseStream.Position = 0
-            $reader.DiscardBufferedData()
-            throw (Format-ErrorCodes $reader.ReadToEnd()).ErrorMessage
-        }
-        # pwsh 7.x
-        elseif ($pwshVersion -eq "Core" -and $_.Exception -is [Microsoft.PowerShell.Commands.HttpResponseException]) {
-            throw (Format-ErrorCodes $_).ErrorMessage
-        }
-        else {
-            Write-Host "New error not being caught yet!"
-            Write-Host $_.Exception.Message -ForegroundColor Yellow
-            Write-Host $_.Exception.GetType().FullName -ForegroundColor Yellow
-        }
+        throw (Format-ErrorCodes $_).ErrorMessage
     }
 }
