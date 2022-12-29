@@ -46,7 +46,10 @@ function Set-OPZoneRecord {
 
     try {
         $request = Invoke-OPRequest -Method Put -Endpoint "dns/zones/$Domain" -Body $request_body
-        return $request.data.success
+        if ($request.data.success -eq $true) {
+            Write-Host "Record has been succesfully set!"
+            return $true | Out-Null
+        }
     }
     catch {
         Write-Error $_.Exception.Message
