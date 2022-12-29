@@ -1,4 +1,5 @@
 function Add-OPNameServer {
+    [CmdletBinding()]
     param (
         [parameter(Mandatory = $true)]
         [string]$Name,
@@ -19,9 +20,23 @@ function Add-OPNameServer {
 
     try {
         $request = Invoke-OPRequest -Method Post -Endpoint "dns/nameservers" -Body $request_body
-        if (($request.data.name -eq $Name) -and ($request.data.ip -eq $IP) -and ($request.data.ip6 -eq $IPv6)) {
+
+        $diffObject = [PSCustomObject]@{
+            name = $Name
+            ip   = $IP
+            ip6  = $IPv6
+        }
+        # validation
+        $compare = Compare-Object -ReferenceObject $request.data -DifferenceObject $diffObject
+
+        if ($request.code -eq 0 -and $compare -ne $true) {
             Write-Host "Nameserver $Name created succesfully!"
-            return $true
+            return $true | Out-Null
+        }
+        else {
+            Write-Warning "Output is different to input, please check manually in OpenProvider CP"
+            Write-Warning "Domain: $Domain - IP: $IP - IPv6: $IPv6"
+            return $false | Out-Null
         }
     }
     catch {
