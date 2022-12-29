@@ -1,13 +1,13 @@
 function New-OPZone {
+    [CmdletBinding()]
     param (
         [parameter(Mandatory = $true)]
         [string]$Domain,
 
         [parameter(Mandatory = $true)]
         [ValidateSet("openprovider", "sectigo")]
-        [string]$Provider,
+        [string]$Provider
 
-        [array]$Records
     )
     $request_body = @{
         domain   = @{
@@ -17,13 +17,13 @@ function New-OPZone {
         provider = $Provider
         type     = "master"
     }
-    if ($Records) {
-        $request_body.records = $Records
-    }
+
     try {
         $request = Invoke-OPRequest -Method Post -Endpoint "dns/zones" -Body $request_body
-        if ($request.code -eq 0) {
-            Write-Host "Zone for $Domain has been created succesfully!"
+        if ($request.data.success -eq $true) {
+            $upperCaseProvider = $Provider[0].ToString().ToUpper() + $Provider.Substring(1)
+            Write-Host "$($upperCaseProvider) zone for $Domain has been created succesfully!"
+            return $true | Out-Null
         }
     }
     catch {
