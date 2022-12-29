@@ -1,4 +1,5 @@
 function Get-OPNameServer {
+    [CmdletBinding()]
     param (
         [string]$Name,
         [string]$IP
@@ -10,15 +11,24 @@ function Get-OPNameServer {
         $request_body.ip = $IP
     }
     try {
-        $request = Invoke-OPRequest -Method Get -Endpoint "dns/nameservers" -Body $request_body -ErrorAction Stop
-        if ([int]$request.data.total -eq 0) {
-            Write-Warning "No nameservers found"
+        $request = Invoke-OPRequest -Method Get -Endpoint "dns/nameservers" -Body $request_body
+
+        if ($request.data.total -ge 1) {
+            $return_object = @()
+            foreach ($_ in $request.data.results) {
+                $return_object += [PSCustomObject]@{
+                    Name = $_.name
+                    IP   = $_.ip
+                    IPv6 = $_.ip6
+                }
+            }
         }
         else {
-            return $request.data.results
+            Write-Warning "No nameserver(s) found"
         }
     }
     catch {
         Write-Error $_.Exception.Message
     }
+    return $return_object
 }
