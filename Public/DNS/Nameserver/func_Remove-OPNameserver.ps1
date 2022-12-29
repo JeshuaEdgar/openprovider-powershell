@@ -1,4 +1,5 @@
 function Remove-OPNameserver {
+    [CmdletBinding()]
     param (
         [parameter(Mandatory = $true)]
         [string]$Name
@@ -7,9 +8,11 @@ function Remove-OPNameserver {
     try {
         $request = Invoke-OPRequest -Method Delete -Endpoint "dns/nameservers/$Name"
         if ($request.data.success -eq $true) {
-            return $true
+            Write-Host "Succesfully deleted $Name nameserver"
+            return $true | Out-Null
         }
     }
+
     catch {
         Write-Error $_.Exception.Message
     }
