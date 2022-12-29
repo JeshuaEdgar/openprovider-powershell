@@ -1,8 +1,9 @@
 function New-OPDomainToken {
+    [CmdletBinding()]
     param(
         [string]$Domain,
 
-        [ValidateSet("OpenProvider", "Sectigo")]
+        [ValidateSet("openprovider", "sectigo")]
         [string]$ZoneProvider
     )
     
@@ -12,9 +13,13 @@ function New-OPDomainToken {
     }
     try {
         $request = Invoke-OPRequest -Method Post -Endpoint "dns/domain-token" -Body $request_body
+        $return_object = [PSCustomObject]@{
+            Token = $request.data.token
+            URL   = $request.data.url
+        }
     }
     catch {
         Write-Error $_.Exception.Message
     }
-    return $request.data.token
+    return $return_object
 }
