@@ -4,7 +4,7 @@
 
 ### Added
 
-- Much improved error handling for requests, will return OpenProvider error code that you can reference to instead of generic failures. (reference[https://support.openprovider.eu/hc/en-us/articles/216644928-API-Error-Codes])
+- Much improved error handling for requests, will return OpenProvider error code that you can reference to instead of generic failures. [(reference)](https://support.openprovider.eu/hc/en-us/articles/216644928-API-Error-Codes)
 - Sanbox connectivity!
 - Validation of created nameserver in ```Add-OPNameserver```
 - Added ```$true``` outputs for all Get, Set and Remove commands when completed succesfully for logic.

@@ -1,5 +1,7 @@
 # OpenProviderPowershell
 
+## [Changelog](https://github.com/JeshuaEdgar/OpenProviderPowershell/blob/development/CHANGELOG.md)
+
 ## How to use
 
 OpenProviderPowershell is available on PowerShellGallery! To install:
