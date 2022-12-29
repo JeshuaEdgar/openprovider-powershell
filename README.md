@@ -8,6 +8,12 @@ OpenProviderPowershell is available on PowerShellGallery! To install:
 Install-Module OpenProviderPowershell
 ```
 
+Or to update:
+
+```powershell
+Update-Module OpenProviderPowershell
+```
+
 ### Connecting/disconnecting
 
 Connecting to OpenProvider is easy, simply run the following commands to get a connection to OpenProvider.
@@ -31,36 +37,38 @@ Disconnect-OpenProvider
 
 You are able to add, get, remove and update OpenProvider nameservers.
 
-Note: to add nameservers, you must have the domain in your OpenProvider portal
+Note: to add nameservers, you must have the domain in your OpenProvider portal!
 
 ```powershell
-Add-OPNameserver -Name "ns1.testdomain.com" -IP "123.456.789.10"
 Get-OPNameserver
+Add-OPNameserver -Name "ns1.testdomain.com" -IP "123.456.789.10"
 Remove-OPNameserver -Name "ns1.testdomain.com"
 Update-OPNameserver -Name "ns1.testdomain.com" -IP "10.987.654.32"
 ```
 
 ### DNS Zones
 
-Getting a zone is necesary for adding and setting records. To get a Zone ID for a domain run the following:
+Getting a zone is necesary for adding and setting DNS records. To get a Zone ID for a domain run the following:
 
 ```powershell
 Get-OPZone -Domain "testdomain.com"
 ```
 
-With a Zone ID, which you get from the above command, you can then querry the records on a domain.
+Query zone records with the following:
 
 ```powershell
-Get-OPZoneRecords -Domain "testdomain.com" -ZoneID "12345678"
+Get-OPZoneRecords -Domain "testdomain.com"
 ```
 
-Adding records is simple, provide a domain name, Zone ID, type of record and the value. Example:
+Note: by default will get OpenProvider zones for a domain when both OpenProvider and Sectigo are present, you can add the parameter ```-Provider sectigo``` to get the records in the sectigo zone.
+
+Adding records is simple: provide the domain name, Zone ID, type of record and the value. Example:
 
 ```powershell
-Add-OPZoneRecord -Domain "testdomain.com" -ZoneID "12345678" Type TXT -Value "v=SPF1 -all"
+Add-OPZoneRecord -Domain "testdomain.com" -ZoneID "12345678" -Type TXT -Value "v=SPF1 -all"
 ```
 
-The following DNS records can be added through this module:
+Note: The following DNS records can be added through this module:
 
 - A
 - AAAA
@@ -74,16 +82,27 @@ Updating existing records can be done too. Use ```New-OPZoneRecordObject``` to c
 
 ```powershell
 $domain = "testdomain.com"
-$zone = Get-OPZone -Domain $domain
-$zone_records = Get-OPZoneRecords -Domain $domain -ZoneID $zone.id
-$original_record = $zone_records | Where-Object {($_.type -eq "TXT") -and ($_.value -eq "v=SPF1 +all")}
+# get the zone id
+$zone = Get-OPZone -Domain $domain -Provider sectigo
+# get the records assosciated with the domain
+$zone_records = Get-OPZoneRecords -Domain $domain -Provider sectigo
+# filter the original record
+$original_record = $zone_records | Where-Object { ($_.type -eq "TXT") -and ($_.value -eq '"v=SPF1 +all"') }
+# create a new record object
 $new_record = New-OPZoneRecordObject -Type TXT -Value "v=SPF1 -all"
-Set-OPZoneRecord -Domain $domain -ZoneID $zone.id -OriginalRecord $original_record -NewRecord $new_record
+# set the record 
+Set-OPZoneRecord -Domain $domain -ZoneID $zone.ZoneID -OriginalRecord $original_record -NewRecord $new_record
 ```
 
 ### Domain
 
-You can search for all domains in your OpenProvider directory, or you can search for a specific domain:
+You can search for all domains in your OpenProvider directory:
+
+```powershell
+Get-OPDomain
+```
+
+Or you can search for a specific domain:
 
 ```powershell
 Get-OpDomain -Domain "testdomain.com"
@@ -102,19 +121,7 @@ $domainlist = @(
 Get-OPDomainAvailability -Domain $domainlist
 ```
 
-Output will look like this, this can be handy if you want to check the availibility and price before you go ahead and register a domain:
-
-```powershell
-domain           status currency  price
-------           ------ --------  -----
-iwanttocheck.com free   EUR       8.900
-thesedomains.au  free   EUR      31.130
-ohandthisone.nl  free   EUR       3.190
-```
-
-#### TODO
-
-- Register-OPDomain (quite extensive function, might take a while)
+This can be useful if you want to check the availibility and price before you go ahead and register a domain.
 
 ## Disclaimer
 
