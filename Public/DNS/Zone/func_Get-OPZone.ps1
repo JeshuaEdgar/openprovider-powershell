@@ -1,4 +1,5 @@
 function Get-OPZone {
+    [CmdletBinding()]
     param (
         [string]$Domain,
 
@@ -37,7 +38,6 @@ function Get-OPZone {
                     if ($Provider) {
                         $request_body += @{provider = $Provider }
                     }
-                    Write-Host "this is a test"
                     $zones += (Invoke-OPRequest -Method Get -Endpoint "dns/zones" -Body $request_body).data.results
                     $offset += 500
                 } until (
@@ -75,4 +75,3 @@ function Get-OPZone {
     }
     return $return_object
 }
-

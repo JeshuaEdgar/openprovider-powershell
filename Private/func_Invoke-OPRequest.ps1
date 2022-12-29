@@ -1,4 +1,5 @@
 function Invoke-OPRequest {
+    [CmdletBinding()]
     param (
         [CmdletBinding()]
 

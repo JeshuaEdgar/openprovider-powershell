@@ -12,6 +12,7 @@
 #>
 
 function Connect-OpenProvider {
+    [CmdletBinding()]
     param(
         [pscredential]$Credential,
 
@@ -46,8 +47,8 @@ function Connect-OpenProvider {
             $script:OpenProviderSession.AuthToken = $Session.data.token
             $script:OpenProviderSession.TimeToRefresh = (Get-Date).AddDays(2)
             $returnMessage = @(
-                Write-Output "Welcome to OpenProvider!"
-                Write-Output "Please be aware your token will expire on $($script:OpenProviderSession.TimeToRefresh)"
+                Write-Host "Welcome to OpenProvider!"
+                Write-Host "Please be aware your token will expire on $($script:OpenProviderSession.TimeToRefresh)"
             )
             return $returnMessage
         }

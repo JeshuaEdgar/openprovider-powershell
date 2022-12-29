@@ -8,6 +8,7 @@
 #>
 
 function Get-OPZoneRecords {
+    [CmdletBinding()]
     param (
         [parameter(Mandatory = $true)]
         [string]$Domain,
@@ -39,11 +40,11 @@ function Get-OPZoneRecords {
             }
         }
         else {
-            Write-Output "No zone records found for domain $Domain"
+            Write-Host "No zone records found for domain $Domain"
         }
     }
     catch {
         Write-Error $_.Exception.Message
     }
-    return $return_object
+    return $return_object 
 }

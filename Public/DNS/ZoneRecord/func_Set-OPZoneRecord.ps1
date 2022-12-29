@@ -1,4 +1,5 @@
 function Set-OPZoneRecord {
+    [CmdletBinding()]
     param (
         [parameter(Mandatory = $true)]
         [string]$Domain,

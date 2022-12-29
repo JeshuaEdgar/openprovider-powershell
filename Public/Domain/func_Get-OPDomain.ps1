@@ -1,4 +1,5 @@
 function Get-OPDomain {
+    [CmdletBinding()]
     param (
         [string]$Domain,
 
@@ -68,9 +69,9 @@ function Get-OPDomain {
             $return_object += $domain_object
             $i++
         }
-        return $return_object
     }
     else {
         Write-Warning "Not able to find any domains with $Domain as search query"
     }
+    return $return_object 
 }

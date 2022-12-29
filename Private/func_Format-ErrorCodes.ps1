@@ -1,6 +1,5 @@
 function Format-ErrorCodes {
     [CmdletBinding()]
-
     param (
         [parameter(Mandatory = $true)]
         $ErrorObject

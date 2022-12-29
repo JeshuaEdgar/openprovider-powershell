@@ -1,4 +1,5 @@
 function Get-OPDomainAvailability {
+    [CmdletBinding()]
     param (
         [parameter(Mandatory = $true)]
         $Domain
@@ -30,9 +31,9 @@ function Get-OPDomainAvailability {
             }
             $return_object += $domain_data
         }
-        return $return_object
     }
     catch {
         Write-Error $_.Exception.Message
     }
+    return $return_object 
 }

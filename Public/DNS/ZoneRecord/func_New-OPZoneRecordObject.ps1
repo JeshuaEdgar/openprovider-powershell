@@ -1,4 +1,5 @@
 function New-OPZoneRecordObject {
+    [CmdletBinding()]
     param (
         [string]$Name,
 
