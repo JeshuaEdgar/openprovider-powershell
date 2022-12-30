@@ -35,7 +35,7 @@ function Get-OPZoneRecords {
                     Priority = $_.prio
                     TTL      = $_.ttl
                     Type     = $_.type
-                    Value    = $_.value
+                    Value    = $_.value.Replace('"', "")
                 }
             }
         }
