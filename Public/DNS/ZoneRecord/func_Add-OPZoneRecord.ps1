@@ -52,17 +52,17 @@ function Add-OPZoneRecord {
             Write-Error "Please set the priority for the $Type record"
             return
         }
-        $request_body.records.add += @{prio = $Priority }
+        $request_body.records.add[0] += @{prio = $Priority }
     }
     if ($Name) {
-        $request_body.records.add += @{name = $Name }
+        $request_body.records.add[0] += @{name = $Name }
     }
 
-    #compile request body into JSON for the request
-    $request_body = $request_body | ConvertTo-Json -Depth 3
     try {
-        if ((Invoke-OPRequest -Method Put -Uri "dns/zones/$($Domain)" -Body $request_body).StatusCode -eq 200) {
-            return $true
+        $request = Invoke-OPRequest -Method Put -Endpoint "dns/zones/$($Domain)" -Body $request_body
+        if ($request.data.success -eq $true) {
+            Write-Host "Record has been succesfully created!"
+            return $true | Out-Null
         }
     }
     catch {
