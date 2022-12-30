@@ -9,6 +9,10 @@
 - Validation of created nameserver in ```Add-OPNameserver```
 - Added ```$true``` outputs for all Get, Set and Remove commands when completed succesfully for logic.
 - ```[CmdletBinding()]``` to every function for common parameters.
+- ```Connect-OpenProvider``` now uses ```Invoke-OPRequest```
+- Prettier outputs for all commands that return information (```Get-OP*```)
+- ```Update-OPDomain``` add comments, lock the domain and change nameserver groups with this command.
+- ```Get-OPNameserverGroup``` get a list of nameserver groups in your tenant.
 
 ### Fixed
 
@@ -16,8 +20,6 @@
 
 ### Changed
 
-- ```Connect-OpenProvider``` now uses ```Invoke-OPRequest```
-- Prettier outputs for all commands that return information (```Get-OP*```)
 - ```Get-OPZone``` now takes an optional ```-Provider``` parameter instead of a clunky Zone ID.
 - ```Update-OPZone``` parameter ```-IsSpamexpertsEnabled``` is now ```-EnableSpamExperts```
 - ```Get-OPDomainDetails``` is now ```Get-OPDomain -Detailed```
