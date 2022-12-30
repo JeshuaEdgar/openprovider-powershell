@@ -42,8 +42,6 @@ function Set-OPZoneRecord {
         }
     }
 
-    # return $request_body | ConvertTo-Json -depth 5
-
     try {
         $request = Invoke-OPRequest -Method Put -Endpoint "dns/zones/$Domain" -Body $request_body
         if ($request.data.success -eq $true) {
