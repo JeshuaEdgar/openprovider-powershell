@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [v1.1.0]
 
 ### Added
 
@@ -10,9 +10,10 @@
 - Added ```$true``` outputs for all Get, Set and Remove commands when completed succesfully for logic.
 - ```[CmdletBinding()]``` to every function for common parameters.
 - ```Connect-OpenProvider``` now uses ```Invoke-OPRequest```
-- Prettier outputs for all commands that return information (```Get-OP*```)
+- More readable and useful outputs for all commands that return information (```Get-OP*```)
 - ```Update-OPDomain``` add comments, lock the domain and change nameserver groups with this command.
 - ```Get-OPNameserverGroup``` get a list of nameserver groups in your tenant.
+- ```New-OPAuthCode``` get a AuthCode for your domain (specify domain ID)
 
 ### Fixed
 
