@@ -12,7 +12,7 @@
     RootModule        = '.\OpenProviderPowershell.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.0.3'
+    ModuleVersion     = '1.1.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -86,6 +86,7 @@
         "Get-OPDomain",
         "Get-OPDomainAvailability",
         "Update-OPDomain",
+        "New-OPAuthCode",
         "Connect-OpenProvider",
         "Disconnect-OpenProvider"
     )
@@ -148,4 +149,3 @@
     # DefaultCommandPrefix = ''
 
 }
-
