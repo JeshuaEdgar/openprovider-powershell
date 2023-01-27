@@ -1,9 +1,15 @@
+name: Publish module to Powershell Gallery
+
 on:
   push:
     tags:
       - '*'
-- name: Publish Module to PowerShell Gallery
-  uses: pcgeek86/publish-powershell-module-action@v20
-  id: publish-module
-  with:
-    NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
+jobs:
+publish:
+    runs-on: ubuntu-latest
+    steps:
+        # Publishing the module to powershell gallery        
+    - name: Publish to Powershell Gallery
+        uses: pcgeek86/publish-powershell-module-action@v20
+        with:
+        NuGetApiKey: ${{ secrets.NUGETAPIKEY }} # Using the NugetAPI key set in GitHub Secrets
