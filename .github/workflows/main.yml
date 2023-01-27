@@ -5,11 +5,12 @@ on:
     tags:
       - '*'
 jobs:
-publish:
+  publish:
     runs-on: ubuntu-latest
     steps:
-        # Publishing the module to powershell gallery        
-    - name: Publish to Powershell Gallery
+    # Publishing the module to powershell gallery        
+      - name: Publish to Powershell Gallery
         uses: pcgeek86/publish-powershell-module-action@v20
+        id: publish-module
         with:
-        NuGetApiKey: ${{ secrets.NUGETAPIKEY }} # Using the NugetAPI key set in GitHub Secrets
+          NuGetApiKey: ${{ secrets.NUGETAPIKEY }} # Using the NugetAPI key set in GitHub Secrets
