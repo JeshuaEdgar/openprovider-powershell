@@ -11,6 +11,7 @@ function Get-OPDomain {
     if ($Domain -ne "") {
         $domain_request_body = @{
             full_name = $Domain
+            status    = "ACT"
         }
         try {
             $domains = (Invoke-OPRequest -Method Get -Endpoint "domains" -Body $domain_request_body).data.results
@@ -24,12 +25,24 @@ function Get-OPDomain {
     else {
         $domains = @()
         $offset = 0
-        $total_domains = (Invoke-OPRequest -Method Get -Endpoint "domains").data.total
+        $req_body_total = @{
+            status = "ACT"
+        }
+        $total_domains = (Invoke-OPRequest -Method Get -Endpoint "domains" -Body $req_body_total).data.total
         try {
             do {
+                if ($total_domains -gt $limit) {
+                    $activity_splat = @{
+                        Activity        = "Retrieving domains..."
+                        Status          = "[$offset/$total_domains]"
+                        PercentComplete = (($offset / $total_domains) * 100)
+                    }
+                    Write-Progress @activity_splat
+                }
                 $domain_request_body = @{
                     limit  = $limit
                     offset = $offset
+                    status = "ACT"
                 }
                 $domains += (Invoke-OPRequest -Method Get -Endpoint "domains" -Body $domain_request_body).data.results
                 $offset += 500
@@ -51,7 +64,6 @@ function Get-OPDomain {
             $domain_object = [pscustomobject]@{
                 ID     = $domains[$i].id
                 Domain = ($domains[$i].domain.name, $domains[$i].domain.extension) -join "."
-                
             }
             if ($Detailed) {
                 $domain_object | Add-Member @{
