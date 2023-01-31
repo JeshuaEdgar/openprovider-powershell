@@ -89,7 +89,7 @@ $zone = Get-OPZone -Domain $domain -Provider sectigo
 # get the records assosciated with the domain
 $zone_records = Get-OPZoneRecords -Domain $domain -Provider sectigo
 # filter the original record
-$original_record = $zone_records | Where-Object { ($_.type -eq "TXT") -and ($_.value -eq '"v=SPF1 +all"') }
+$original_record = $zone_records | Where-Object { ($_.type -eq "TXT") -and ($_.value -eq "v=SPF1 +all") }
 # create a new record object
 $new_record = New-OPZoneRecordObject -Type TXT -Value "v=SPF1 -all"
 # set the record 
