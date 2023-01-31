@@ -1,5 +1,19 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- Added progress indicator for lists more than 500 domains with ```Get-OPDomain```
+
+### Fixed
+
+- Fixed #5 where ```-Detailed``` would raise an error when a domain is not of status "ACT".
+
+### Changed
+
+- Changed ```Get-OPDomain``` to only search for active domains, failed, deleted and requested domains will NOT show.
+
 ## [v1.1.0]
 
 ### Added
