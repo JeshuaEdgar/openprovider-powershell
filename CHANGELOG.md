@@ -4,7 +4,8 @@
 
 ### Added
 
-- Added SSL suite of commands
+- Added SSL commands
+- Verbose ouputs for the request splat in ```Invoke-OPRequest```
 
 ## [v1.1.1]
 
