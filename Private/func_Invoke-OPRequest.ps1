@@ -46,6 +46,11 @@ function Invoke-OPRequest {
         else {
             $request_splat.Body += $Body | ConvertTo-Json -Depth 4
         }
+        # verbose option to see everything in request splat
+        foreach ($key in $request_splat.Keys) {
+            Write-Verbose "$($key)=$($request_splat[$key])"
+        }
+
         # check if command is not being called from $functionExceptions
         if ($functionCallStack -notin $functionExceptions) {
             $request_splat.Headers += @{ Authorization = "Bearer $($OpenProviderSession.AuthToken)" }
