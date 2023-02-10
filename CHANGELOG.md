@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- Added SSL suite of commands
+
 ## [v1.1.1]
 
 ### Added
