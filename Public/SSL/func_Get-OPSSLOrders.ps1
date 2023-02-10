@@ -16,7 +16,7 @@ function Get-OPSSLOrders {
             if ($ExpiringSoon) {
                 $request_body.show_expiring = 'true'
             }
-            $request = Invoke-OPRequest -Method Get -Endpoint "ssl/orders" -Body $request_body -verbose
+            $request = Invoke-OPRequest -Method Get -Endpoint "ssl/orders" -Body $request_body
             $request = $request.data.results
         }
         else {

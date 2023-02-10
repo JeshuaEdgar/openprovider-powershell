@@ -6,7 +6,7 @@
 
 * Added SSL commands
     - ```Get-OPSSLProducts```
-    - ```Get-OPSSLOrder```
+    - ```Get-OPSSLOrders```
 - Verbose ouputs for the request splat in ```Invoke-OPRequest```
 
 ## [v1.1.1]
