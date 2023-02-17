@@ -12,10 +12,6 @@ function Get-OPSSLOrders {
         }
         # if ID is empty
         if ($ID -eq "") {
-            # add request params based on input
-            if ($ExpiringSoon) {
-                $request_body.show_expiring = 'true'
-            }
             $request = Invoke-OPRequest -Method Get -Endpoint "ssl/orders" -Body $request_body
             $request = $request.data.results
         }
@@ -38,17 +34,19 @@ function Get-OPSSLOrders {
         $return_object = @()
         foreach ($order in $request) {
             $return_object += [PSCustomObject]@{
-                ID             = $order.id
-                Product        = $order.product_name
-                Hostname       = $order.common_name
-                Status         = ($statusMap | Select-Object $($order.status)).$($order.status)
-                ExpirationDate = [datetime]$order.expiration_date
-                Period         = $order.period
-                AutoRenew      = if ($order.autorenew -eq "on") { $true } else { $false }
+                ID               = $order.id
+                Product          = $order.product_name
+                Hostname         = $order.common_name
+                Status           = ($statusMap | Select-Object $($order.status)).$($order.status)
+                ExpirationDate   = [datetime]$order.expiration_date
+                Period           = $order.period
+                AutoRenew        = if ($order.autorenew -eq "on") { $true } else { $false }
+                ValidationMethod = $order.validation_method
             }
         }
         if ($ExpiringSoon) {
-            $return_object = $return_object | Where-Object { $_.ExpirationDate -gt (Get-Date).AddDays(-30) }
+            $dateToExpire = (Get-Date).AddDays(30)
+            $return_object = $return_object | Where-Object { $_.ExpirationDate -lt $dateToExpire -and $_.ExpirationDate -gt (Get-Date) }
         }
     }
     catch {
