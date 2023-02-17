@@ -42,6 +42,7 @@ function Get-OPSSLOrders {
                 Period           = $order.period
                 AutoRenew        = if ($order.autorenew -eq "on") { $true } else { $false }
                 ValidationMethod = $order.validation_method
+                EmailApprover    = $order.email_approver
             }
         }
         if ($ExpiringSoon) {
