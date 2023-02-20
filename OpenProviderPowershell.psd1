@@ -12,7 +12,7 @@
     RootModule        = '.\OpenProviderPowershell.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.1.1'
+    ModuleVersion     = '1.2.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -70,25 +70,28 @@
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport = @(
-        "Get-OPZone",
-        "New-OPZone",
-        "Remove-OPZone",
         "Add-OPNameserver",
-        "Get-OPNameserver",
-        "Get-OPNameserverGroup",
-        "Remove-OPNameserver",
-        "Update-OPNameserver",
         "Add-OPZoneRecord",
-        "Get-OPZoneRecords",
-        "New-OPZoneRecordObject",
-        "Set-OPZoneRecord",
-        "New-OPDomainToken",
+        "Connect-OpenProvider",
+        "Disconnect-OpenProvider",
         "Get-OPDomain",
         "Get-OPDomainAvailability",
-        "Update-OPDomain",
+        "Get-OPNameserver",
+        "Get-OPNameserverGroup",
+        "Get-OPSSLOrders",
+        "Get-OPSSLProducts",
+        "Get-OPZone",
+        "Get-OPZoneRecords",
         "New-OPAuthCode",
-        "Connect-OpenProvider",
-        "Disconnect-OpenProvider"
+        "New-OPDomainToken",
+        "New-OPZone",
+        "New-OPZoneRecordObject",
+        "Remove-OPNameserver",
+        "Remove-OPZone",
+        "Set-OPZoneRecord",
+        "Send-OPSSLApproverEmail",
+        "Update-OPDomain",
+        "Update-OPNameserver"
     )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
