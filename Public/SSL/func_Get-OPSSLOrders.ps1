@@ -8,7 +8,7 @@ function Get-OPSSLOrders {
         # same for both requests
         $request_body = @{
             limit  = 1000
-            status = "ACT&status=REQ&status=PAI"
+            status = "ACT&status=REQ"
         }
         # if ID is empty
         if ($ID -eq "") {
