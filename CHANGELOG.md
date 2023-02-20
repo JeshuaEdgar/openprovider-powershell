@@ -4,9 +4,10 @@
 
 ### Added
 
-* Added SSL commands
-    - ```Get-OPSSLProducts```
-    - ```Get-OPSSLOrders```
+- ```Get-OPSSLProducts```
+  - Get a list of all the SSL products
+- ```Get-OPSSLOrders```
+  - Get a list of all orders or use the ```-ExpiringSoon``` switch to list the SSL orders that are expiring soon (30 days)
 - Verbose ouputs for the request splat in ```Invoke-OPRequest```
 
 ## [v1.1.1]
@@ -33,7 +34,7 @@
 - Added ```$true``` outputs for all Get, Set and Remove commands when completed succesfully for logic.
 - ```[CmdletBinding()]``` to every function for common parameters.
 - ```Connect-OpenProvider``` now uses ```Invoke-OPRequest```
-- More readable and useful outputs for all commands that return information (```Get-OP*```)
+- More readable and useful outputs for all commands that return information (```Get-OP-```)
 - ```Update-OPDomain``` add comments, lock the domain and change nameserver groups with this command.
 - ```Get-OPNameserverGroup``` get a list of nameserver groups in your tenant.
 - ```New-OPAuthCode``` get a AuthCode for your domain (specify domain ID)
