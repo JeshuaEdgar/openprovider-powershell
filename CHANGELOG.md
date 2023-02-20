@@ -8,6 +8,8 @@
   - Get a list of all the SSL products
 - ```Get-OPSSLOrders```
   - Get a list of all orders or use the ```-ExpiringSoon``` switch to list the SSL orders that are expiring soon (30 days)
+- ```Send-OPSSLApproverEmail```
+  - (Re)send approve email to the contact, output will specify which email address this is.
 - Verbose ouputs for the request splat in ```Invoke-OPRequest```
 
 ## [v1.1.1]
