@@ -74,6 +74,7 @@
         "Add-OPZoneRecord",
         "Connect-OpenProvider",
         "Disconnect-OpenProvider",
+        "Get-OPCustomerInfo",
         "Get-OPDomain",
         "Get-OPDomainAvailability",
         "Get-OPNameserver",
