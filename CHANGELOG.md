@@ -1,8 +1,11 @@
 # Changelog
 
-## [Unreleased]
+## [1.2.1]
 
-- ```Get-OPCustomerInfo```
+### Fixed
+
+- ```Get-OPZoneRecords``` 
+  - Issue #7 was resolved, command now return up to 500 records, thanks @tomdhoore
 
 ## [1.2.0]
 
