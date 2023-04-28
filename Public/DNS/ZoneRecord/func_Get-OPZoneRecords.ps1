@@ -20,6 +20,7 @@ function Get-OPZoneRecords {
     $request_splat = @{
         Method   = "Get"
         Endpoint = "dns/zones/$($Domain)/records"
+        Body     = @{limit = 500 }
     }
     if ($Provider) {
         $request_splat.Body += @{zone_provider = $Provider }
