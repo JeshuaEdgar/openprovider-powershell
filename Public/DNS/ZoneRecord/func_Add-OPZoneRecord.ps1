@@ -30,7 +30,7 @@ function Add-OPZoneRecord {
 
         [ValidateScript({
                 if (!($PSBoundParameters["Type"] -eq "MX" -and $_ -is [int])) {
-                    throw "Priority is not a valid integer, please adjust your input"
+                    throw "MX Record Priority is not a valid integer, please adjust your input"
                 }
                 $true
             })]
