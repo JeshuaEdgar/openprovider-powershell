@@ -22,11 +22,13 @@ function Add-OPZoneRecord {
         [string]$Value,
 
         [ValidateScript({
-                if ($_ -eq "MX" -and ($PSBoundParameters["Priority"] -is [int])) {
-                    $IsValid = $true
-                }
-                if (-not $IsValid) {
-                    throw "Please set the priority for the MX record, use a valid integer"
+                if ($_ -eq "MX") {
+                    if ($PSBoundParameters["Priority"] -is [int]) {
+                        $IsValid = $true
+                    }
+                    if (-not $IsValid) {
+                        throw "Please set the priority for the MX record, use a valid integer"
+                    }
                 }
                 $true
             })]
