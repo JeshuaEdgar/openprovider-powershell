@@ -26,9 +26,19 @@ function Add-OPZoneRecord {
         [string]$Type,
 
         [ValidateSet(900, 3600, 10800, 21600, 43200, 86400)] #15m, 1h, 3h, 6h, 12h, 1day
-        [int]$TTL = 3600,
+        [int32]$TTL = 3600,
 
-        [int]$Priority
+        [ValidateScript({
+                if (($PSBoundParameters["Type"] -eq "MX" ) -and ($_ -is [int])) {
+                    $IsValid = $true
+                }
+                if (-not $IsValid) {
+                    throw "Please set the priority for the MX record, use a valid integer"
+                }
+                $true
+            })]
+        [int32]$Priority
+        
     )
 
     #build the required record body
@@ -48,10 +58,6 @@ function Add-OPZoneRecord {
 
     # add priority for mx records
     if ($Type -eq "MX") {
-        if (!$Priority) {
-            Write-Error "Please set the priority for the $Type record"
-            return
-        }
         $request_body.records.add[0] += @{prio = $Priority }
     }
     if ($Name) {
