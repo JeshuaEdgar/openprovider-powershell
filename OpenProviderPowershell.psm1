@@ -27,6 +27,6 @@ try {
     }
 }
 catch {
-    Write-Error ("{0}: {1}" -f $_.BaseName, $_.Exception.Message)
+    throw ("{0}: {1}" -f $_.BaseName, $_.Exception.Message)
     exit 1
 }

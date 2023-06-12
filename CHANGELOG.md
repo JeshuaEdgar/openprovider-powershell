@@ -1,6 +1,10 @@
 # Changelog
 
-## [1.2.2]
+## [1.3.0]
+
+### Changed
+
+- ```Write-Error``` has been replaced by ```throw```, this will in some cases break your script since, instead of writing an error in the output, it will generate a terminating error. Use try/catch to handle these errors in your scripts.
 
 ### Fixed
 
