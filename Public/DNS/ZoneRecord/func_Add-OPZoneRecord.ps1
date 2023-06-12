@@ -21,15 +21,8 @@ function Add-OPZoneRecord {
         [parameter(Mandatory = $true)]
         [string]$Value,
 
-        [ValidateSet("A", "AAAA", "CAA", "CNAME", "MX", "TXT", "NS")]
-        [parameter(Mandatory = $true)]
-        [string]$Type,
-
-        [ValidateSet(900, 3600, 10800, 21600, 43200, 86400)] #15m, 1h, 3h, 6h, 12h, 1day
-        [int32]$TTL = 3600,
-
         [ValidateScript({
-                if (($PSBoundParameters["Type"] -eq "MX" ) -and ($_ -is [int])) {
+                if ($_ -eq "MX" -and ($PSBoundParameters["Priority"] -is [int])) {
                     $IsValid = $true
                 }
                 if (-not $IsValid) {
@@ -37,6 +30,13 @@ function Add-OPZoneRecord {
                 }
                 $true
             })]
+        [ValidateSet("A", "AAAA", "CAA", "CNAME", "MX", "TXT", "NS")]
+        [parameter(Mandatory = $true)]
+        [string]$Type,
+
+        [ValidateSet(900, 3600, 10800, 21600, 43200, 86400)] #15m, 1h, 3h, 6h, 12h, 1day
+        [int32]$TTL = 3600,
+
         [int32]$Priority
         
     )
