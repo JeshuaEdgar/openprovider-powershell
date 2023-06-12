@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2]
+
+### Fixed
+
+- ```Add-OpZoneRecord```
+  - Issue #8 resolved. Now when given the ```-Type MX```, the script will validate if ```-Priority``` is a valid integer.
+
 ## [1.2.1]
 
 ### Fixed
