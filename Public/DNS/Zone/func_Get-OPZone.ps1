@@ -19,7 +19,7 @@ function Get-OPZone {
             $zones = (Invoke-OPRequest @zone_splat).data
         }
         catch {
-            Write-Error $_.Exception.Message
+            throwception.Message
             return
         }
     }
@@ -55,7 +55,7 @@ function Get-OPZone {
             }
         }
         catch {
-            Write-Error $_.Exception.Message
+            throw $_.Exception.Message
             return
         }    
     }

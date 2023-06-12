@@ -30,7 +30,7 @@ function New-OPZoneRecordObject {
 
     if ($Type -eq "MX") {
         if (!$Priority) {
-            Write-Error "Please set the priority for the $Type record"
+            throw "Please set the priority for the $Type record"
             return
         }
         $record_object | Add-Member -NotePropertyMembers @{prio = $Priority }

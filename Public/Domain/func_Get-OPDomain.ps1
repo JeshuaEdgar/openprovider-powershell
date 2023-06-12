@@ -17,7 +17,7 @@ function Get-OPDomain {
             $domains = (Invoke-OPRequest -Method Get -Endpoint "domains" -Body $domain_request_body).data.results
         }
         catch {
-            Write-Error $_.Exception.Message
+            throw $_.Exception.Message
             return
         }
     }
@@ -51,7 +51,7 @@ function Get-OPDomain {
             )
         }
         catch {
-            Write-Error $_.Exception.Message
+            throw $_.Exception.Message
             return
         }    
     }

@@ -27,8 +27,7 @@ function Connect-OpenProvider {
         $password = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password_securestring))
     }
     catch {
-        Write-Error $_.Exception.Message
-        return
+        throw $_.Exception.Message
     }
 
     $token_body = @{
@@ -54,6 +53,6 @@ function Connect-OpenProvider {
         }
     }
     catch {
-        Write-Error $_.Exception.Message
+        throw $_.Exception.Message
     }
 }

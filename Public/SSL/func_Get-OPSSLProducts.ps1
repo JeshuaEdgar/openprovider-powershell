@@ -19,7 +19,7 @@ function Get-OPSSLProducts {
         }
     }
     catch {
-        Write-Error $_.Exception.Message
+        throw $_.Exception.Message
     }
     return $return_object
 }

@@ -27,6 +27,6 @@ function New-OPZone {
         }
     }
     catch {
-        Write-Error $_.Exception.Message
+        throw $_.Exception.Message
     }
 }

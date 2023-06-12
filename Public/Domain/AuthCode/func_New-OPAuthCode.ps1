@@ -16,7 +16,7 @@ function New-OPAuthCode {
         }
     }
     catch {
-        Write-Error $_.Exception.Message
+        throw $_.Exception.Message
     }
     return $return_object
 }
