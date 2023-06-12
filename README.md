@@ -4,7 +4,11 @@
 
 ## How to use
 
-OpenProviderPowershell is available on PowerShellGallery! ![PowerShellGallery](https://img.shields.io/powershellgallery/dt/OpenProviderPowershell?style=flat-square) To install:
+OpenProviderPowershell is available on PowerShellGallery! 
+
+![PowerShellGallery](https://img.shields.io/powershellgallery/dt/OpenProviderPowershell?style=flat-square) 
+
+To install:
 
 ```powershell
 Install-Module OpenProviderPowershell
