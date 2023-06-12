@@ -1,5 +1,12 @@
 # Changelog
 
+## [Unlreleased]
+
+### Added
+
+- Pipeline input for the following cmdlets
+  - ```Add-OPZoneRecord```
+
 ## [1.3.0]
 
 ### Changed
