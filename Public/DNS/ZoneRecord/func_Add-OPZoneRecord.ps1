@@ -10,13 +10,13 @@
 function Add-OPZoneRecord {
     [CmdletBinding()]
     param (
-        [parameter(ValueFromPipeline = $true)]
+        [parameter(ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [PSCustomObject]$InputObject,
 
-        [parameter(Mandatory = $true, ParameterSetName = 'PipelineInput')]
+        [parameter(ParameterSetName = 'ManualInput', Position = 0)]
         [string]$Domain,
 
-        [parameter(Mandatory = $true, ParameterSetName = 'PipelineInput')]
+        [parameter(ParameterSetName = 'ManualInput', Position = 1)]
         [string]$ZoneID,
 
         [string]$Name,
@@ -41,7 +41,7 @@ function Add-OPZoneRecord {
     )
 
     process {
-        if ($PSCmdlet.ParameterSetName -eq 'PipelineInput') {
+        if ($InputObject) {
             $Domain = $InputObject.Domain
             $ZoneID = $InputObject.ZoneID
         }
@@ -71,7 +71,7 @@ function Add-OPZoneRecord {
         try {
             $request = Invoke-OPRequest -Method Put -Endpoint "dns/zones/$($Domain)" -Body $request_body
             if ($request.data.success -eq $true) {
-                Write-Host "Record has been succesfully created!"
+                Write-Host "$($Type) record has been succesfully created for domain $($Domain)!"
                 return $true | Out-Null
             }
         }
