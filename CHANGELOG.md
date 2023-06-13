@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+Warning: this version breaks a lot of functionality, please adjust/update scripts accordingly.
+
 ### Added
 
 - Pipeline input for the following cmdlets:
@@ -13,7 +15,6 @@ For examples on how to use these new pipeline features please see the example se
 
 - New cmdlets
   - ```Remove-OPZoneRecord```
-    - This cmdlet like others in this release accepts pipeline input.
 
 ### Changed
 - ```Get-OPZoneRecords```
@@ -23,8 +24,12 @@ For examples on how to use these new pipeline features please see the example se
   - ```ZoneID``` is included in the output of this cmdlet (for pipelining)
 
 - ```Set-OPZoneRecord```
-  - This cmdlet will now accept a ```-Record```
+  - This cmdlet now accepts a new parameter ```-Record```, ```-OriginalRecord``` and ```-NewRecord``` have been depricated.
   - Made changing a record much easier and intuitive, just define which parameters you want to change, all parameters are optional.
+
+### Removed
+
+- ```New-OPZoneRecordObject```
 
 ## [1.3.0]
 
