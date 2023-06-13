@@ -1,22 +1,30 @@
 # Changelog
 
-## [Unlreleased]
+## [Unreleased]
 
 ### Added
 
-- Pipeline input for the following cmdlets
+- Pipeline input for the following cmdlets:
   - ```Add-OPZoneRecord```
+  - ```Set-OPZoneRecord```
+  - ```Remove-OPZoneRecord```
+
+For examples on how to use these new pipeline features please see the example section [here](./Examples.md)
 
 - New cmdlets
   - ```Remove-OPZoneRecord```
     - This cmdlet like others in this release accepts pipeline input.
 
 ### Changed
-- ```Get-OPZoneRecords``
+- ```Get-OPZoneRecords```
   - Is now ```Get-OPZoneRecord``` ("s" dropped to comply to PowerShell cmdlet naming)
   - When ```-Provider``` is not specified, it defaults to "openprovider"
   - ```Domain``` and ```Name``` is now seperated in the output (beforehand ```Name``` included the name + domain)
   - ```ZoneID``` is included in the output of this cmdlet (for pipelining)
+
+- ```Set-OPZoneRecord```
+  - This cmdlet will now accept a ```-Record```
+  - Made changing a record much easier and intuitive, just define which parameters you want to change, all parameters are optional.
 
 ## [1.3.0]
 
