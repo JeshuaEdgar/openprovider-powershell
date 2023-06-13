@@ -6,7 +6,7 @@
 
 OpenProviderPowershell is available on PowerShellGallery! 
 
-![PowerShellGallery](https://img.shields.io/powershellgallery/dt/OpenProviderPowershell?style=flat-square) 
+![PSGalleryVersion](https://img.shields.io/powershellgallery/v/OpenProviderPowershell?style=flat-square) ![PSGalleryDownloads](https://img.shields.io/powershellgallery/dt/OpenProviderPowershell?style=flat-square)
 
 To install:
 
