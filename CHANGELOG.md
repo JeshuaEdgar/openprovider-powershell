@@ -7,6 +7,15 @@
 - Pipeline input for the following cmdlets
   - ```Add-OPZoneRecord```
 
+- New cmdlets
+  - ```Remove-OPZoneRecord```
+    - This cmdlet like others in this release accepts pipeline input.
+
+### Changed
+
+- ```Get-OPZoneRecords``` is now ```Get-OPZoneRecord``` ("s" dropped to comply to PowerShell cmdlet naming)
+- ```Get-OPZoneRecord``` when ```-Provider``` is not specified, it defaults to "openprovider"
+
 ## [1.3.0]
 
 ### Changed

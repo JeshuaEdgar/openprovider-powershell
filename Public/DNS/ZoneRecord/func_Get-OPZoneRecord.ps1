@@ -7,23 +7,22 @@
     Get-OPZoneRecord -Domain "testdomain.com" -Provider sectigo
 #>
 
-function Get-OPZoneRecords {
+function Get-OPZoneRecord {
     [CmdletBinding()]
     param (
+        [parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+
         [parameter(Mandatory = $true)]
         [string]$Domain,
 
         [ValidateSet("openprovider", "sectigo")]
-        [string]$Provider
+        [string]$Provider = "openprovider"
     )
 
     $request_splat = @{
         Method   = "Get"
         Endpoint = "dns/zones/$($Domain)/records"
-        Body     = @{limit = 500 }
-    }
-    if ($Provider) {
-        $request_splat.Body += @{zone_provider = $Provider }
+        Body     = @{limit = 500; zone_provider = $Provider }
     }
     
     try {
