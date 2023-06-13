@@ -1,6 +1,7 @@
 function Get-OPDomain {
     [CmdletBinding()]
     param (
+        [parameter(Position = 0)]
         [string]$Domain,
 
         [switch]$Detailed
@@ -83,7 +84,7 @@ function Get-OPDomain {
         }
     }
     else {
-        Write-Warning "Not able to find any domains with $Domain as search query"
+        throw "Not able to find any domains with $Domain as search query"
     }
     return $return_object 
 }
