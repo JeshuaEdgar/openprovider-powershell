@@ -10,13 +10,13 @@
 function Get-OPZoneRecord {
     [CmdletBinding()]
     param (
-        [parameter(ValueFromPipeline, ValueFromPipelineByPropertyName, DontShow)]
+        [parameter(ValueFromPipeline, DontShow)]
         [PSCustomObject]$InputObject,
 
-        [parameter(ParameterSetName = 'ManualInput')]
+        [parameter(ParameterSetName = "ManualInput", Position = 0)]
         [string]$Domain,
 
-        [parameter(ParameterSetName = 'ManualInput')]
+        [parameter(ParameterSetName = "ManualInput")]
         [ValidateSet("openprovider", "sectigo")]
         [string]$Provider = "openprovider"
     )
