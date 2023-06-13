@@ -53,5 +53,8 @@ function Get-OPSSLOrders {
     catch {
         throw $_.Exception.Message
     }
+    if ($return_object.count -eq 0) {
+        throw "No SSL Orders found!"
+    }
     return $return_object
 }
