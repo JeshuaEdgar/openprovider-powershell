@@ -40,7 +40,7 @@ function Invoke-OPRequest {
             Uri    = ($script:OpenProviderSession.Uri + $Endpoint)
         }
         # check if get method + query params (powershell 5.1 compatibility)
-        if ($Method -eq "Get" -and $Body) {
+        if (($Method -eq "Get" -and $Body) -and ($PSVersionTable.PSEdition -eq "Desktop")) {
             $request_splat.Uri = ($script:OpenProviderSession.Uri + $Endpoint + (New-QueryString -Parameters $Body))
         }
         else {
