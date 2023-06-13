@@ -10,6 +10,7 @@ Warning: this version CAN break a lot of functionality, please read through the 
   - ```Add-OPZoneRecord```
   - ```Set-OPZoneRecord```
   - ```Remove-OPZoneRecord```
+  - ```Remove-OPZone```
 
 For examples on how to use these new pipeline features please see the example section [here](./Examples.md)
 
