@@ -37,11 +37,13 @@ function Get-OPZoneRecord {
     
         try {
             $request = Invoke-OPRequest @request_splat
+            $ZoneID = Get-OpZone -Domain $Domain -Provider $Provider
             if ($request.data.total -gt 0) {
                 $return_object = @()
                 $request.data.results | ForEach-Object {
                     $return_object += [PSCustomObject]@{
                         Domain   = $Domain
+                        ZoneID   = $ZoneID.ZoneID
                         Name     = ($_.name -replace $Domain, "") -replace ".$"
                         Priority = $_.prio
                         TTL      = $_.ttl
