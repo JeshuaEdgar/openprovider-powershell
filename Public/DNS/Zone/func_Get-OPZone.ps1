@@ -4,6 +4,7 @@ function Get-OPZone {
         [parameter(Position = 0)]
         [string]$Domain,
 
+        # For now (6/13/2023) the API does not seem to handle 'provider', it returns a mixed bag of both openprovider and sectigo zones
         [ValidateSet("openprovider", "sectigo")]
         [string]$Provider
     )
