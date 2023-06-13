@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-Warning: this version breaks a lot of functionality, please adjust/update scripts accordingly.
+Warning: this version CAN break a lot of functionality, please read through the changelog and update scripts accordingly.
 
 ### Added
 
