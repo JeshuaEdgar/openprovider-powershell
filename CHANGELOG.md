@@ -16,6 +16,7 @@
   - Is now ```Get-OPZoneRecord``` ("s" dropped to comply to PowerShell cmdlet naming)
   - When ```-Provider``` is not specified, it defaults to "openprovider"
   - ```Domain``` and ```Name``` is now seperated in the output (beforehand ```Name``` included the name + domain)
+  - ```ZoneID``` is included in the output of this cmdlet (for pipelining)
 
 ## [1.3.0]
 
