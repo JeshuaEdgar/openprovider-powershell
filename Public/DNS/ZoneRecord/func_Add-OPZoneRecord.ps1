@@ -13,24 +13,27 @@ function Add-OPZoneRecord {
         [parameter(ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [PSCustomObject]$InputObject,
 
-        [parameter(ParameterSetName = 'ManualInput', Position = 0)]
+        [parameter(ParameterSetName = "ManualInput")]
         [string]$Domain,
 
-        [parameter(ParameterSetName = 'ManualInput', Position = 1)]
+        [parameter(ParameterSetName = "ManualInput")]
         [string]$ZoneID,
 
+        [parameter(ParameterSetName = "ManualInput")]
         [string]$Name,
 
-        [parameter(Mandatory = $true, ParameterSetName = 'ManualInput')]
+        [parameter(Mandatory = $true, ParameterSetName = "ManualInput")]
         [string]$Value,
 
         [ValidateSet("A", "AAAA", "CAA", "CNAME", "MX", "TXT", "NS")]
-        [parameter(Mandatory = $true, ParameterSetName = 'ManualInput')]
+        [parameter(Mandatory = $true, ParameterSetName = "ManualInput")]
         [string]$Type,
 
+        [parameter(ParameterSetName = "ManualInput")]
         [ValidateSet(900, 3600, 10800, 21600, 43200, 86400)] #15m, 1h, 3h, 6h, 12h, 1day
         [int]$TTL = 3600,
 
+        [parameter(ParameterSetName = "ManualInput")]
         [ValidateScript({
                 if (!($PSBoundParameters["Type"] -eq "MX" -and $_ -is [int])) {
                     throw "MX Record Priority is not a valid integer, please adjust your input"
