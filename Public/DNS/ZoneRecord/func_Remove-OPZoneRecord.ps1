@@ -1,55 +1,42 @@
 function Remove-OPZoneRecord {
+    [CmdletBinding()]
     param (
-        [parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [parameter(ValueFromPipeline, DontShow)]
         [PSCustomObject]$InputObject,
 
-        [parameter(ParameterSetName = "ManualInput")]
-        [string]$Domain,
-
-        [parameter(ParameterSetName = "ManualInput")]
-        [string]$ZoneID,
-
-        [parameter(ParameterSetName = "ManualInput")]
-        [PCSutomObject]$Record
+        [parameter(ParameterSetName = "ManualInput", Position = 0)]
+        [PSCustomObject]$Record
     )
     process {
         if ($InputObject) {
-            $Domain = $InputObject.Domain
-            $ZoneID = $InputObject.ZoneID
-            $RemoveRecord = @{
-                name  = $InputObject.Name
-                prio  = $NewRecord.Priority
-                ttl   = $NewRecord.TTL
-                value = $NewRecord.Value
-                type  = $NewRecord.Type
-            }
-        }
-        elseif (-not ($Domain -and $ZoneID -and $Record)) {
-            throw "Missing parameters, please check if 'Domain', 'ZoneID' and 'Record' are correct"
+            $Record = $InputObject
         }
 
-        # if not passed through as pipeline
+        elseif (-not $Record) {
+            throw "Missing 'Record'"
+        }
+
         $RemoveRecord = @{
-            name  = $Record.name
-            prio  = $Record.prio
-            ttl   = $Record.ttl
-            value = $Record.value
-            type  = $Record.type
+            name  = $Record.Name
+            prio  = $Record.Priority
+            ttl   = $Record.TTL
+            value = $Record.Value
+            type  = $Record.Type
         }
 
         try {
             $request_body = @{
-                id      = $ZoneID
-                name    = $Domain
+                id      = $Record.ZoneID
+                name    = $Record.Domain
                 records = @{
                     remove = @(
                         $RemoveRecord
                     )
                 }
             }
-            $request = Invoke-OPRequest -Method "Put" -Endpoint "dns/zones/$Domain" -Body $request_body
+            $request = Invoke-OPRequest -Method "Put" -Endpoint "dns/zones/$($Record.Domain)" -Body $request_body
             if ($request.data.success -eq $true) {
-                Write-Host "$($RemoveRecord.Type) record has been succesfully deleted for domain $Domain!"
+                Write-Host "$($RemoveRecord.Type) record has been succesfully deleted for domain $($Record.Domain)!"
                 return $true | Out-Null
             }
         }
