@@ -10,7 +10,7 @@
 function Add-OPZoneRecord {
     [CmdletBinding()]
     param (
-        [parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [parameter(ValueFromPipeline, ValueFromPipelineByPropertyName, DontShow)]
         [PSCustomObject]$InputObject,
 
         [parameter(ParameterSetName = "ManualInput")]
