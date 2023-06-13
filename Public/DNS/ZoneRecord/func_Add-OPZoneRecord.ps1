@@ -10,7 +10,7 @@
 function Add-OPZoneRecord {
     [CmdletBinding()]
     param (
-        [parameter(ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PSCustomObject]$InputObject,
 
         [parameter(ParameterSetName = "ManualInput")]
@@ -22,11 +22,11 @@ function Add-OPZoneRecord {
         [parameter(ParameterSetName = "ManualInput")]
         [string]$Name,
 
-        [parameter(Mandatory = $true, ParameterSetName = "ManualInput")]
+        [parameter(Mandatory, ParameterSetName = "ManualInput")]
         [string]$Value,
 
         [ValidateSet("A", "AAAA", "CAA", "CNAME", "MX", "TXT", "NS")]
-        [parameter(Mandatory = $true, ParameterSetName = "ManualInput")]
+        [parameter(Mandatory, ParameterSetName = "ManualInput")]
         [string]$Type,
 
         [parameter(ParameterSetName = "ManualInput")]
@@ -48,6 +48,10 @@ function Add-OPZoneRecord {
             $Domain = $InputObject.Domain
             $ZoneID = $InputObject.ZoneID
         }
+        elseif (-not ($Domain -and $ZoneID)) {
+            throw "'Domain' and 'ZoneID' are mandatory parameters! Please add the missing parameter(s)"
+        }
+        
         #build the required record body
         $request_body = [ordered]@{
             id      = $ZoneID
