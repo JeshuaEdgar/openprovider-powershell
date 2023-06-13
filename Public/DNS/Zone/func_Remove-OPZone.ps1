@@ -1,10 +1,10 @@
 function Remove-OPZone {
     [CmdletBinding()]
     param (
-        [parameter(Mandatory = $true)]
+        [parameter(Mandatory, Position = 0)]
         [string]$Domain,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory)]
         [ValidateSet("openprovider", "sectigo")]
         [string]$Provider
     )

@@ -1,6 +1,7 @@
 function New-OPDomainToken {
     [CmdletBinding()]
     param(
+        [parameter(Position = 0)]
         [string]$Domain,
 
         [ValidateSet("openprovider", "sectigo")]

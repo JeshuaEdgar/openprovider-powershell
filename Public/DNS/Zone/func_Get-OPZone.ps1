@@ -1,6 +1,7 @@
 function Get-OPZone {
     [CmdletBinding()]
     param (
+        [parameter(Position = 0)]
         [string]$Domain,
 
         [ValidateSet("openprovider", "sectigo")]

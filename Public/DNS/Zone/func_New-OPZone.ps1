@@ -1,10 +1,10 @@
 function New-OPZone {
     [CmdletBinding()]
     param (
-        [parameter(Mandatory = $true)]
+        [parameter(Mandatory, Position = 0)]
         [string]$Domain,
 
-        [parameter(Mandatory = $true)]
+        [parameter(Mandatory)]
         [ValidateSet("openprovider", "sectigo")]
         [string]$Provider
 
