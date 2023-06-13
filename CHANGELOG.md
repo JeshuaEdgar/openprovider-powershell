@@ -12,9 +12,10 @@
     - This cmdlet like others in this release accepts pipeline input.
 
 ### Changed
-
-- ```Get-OPZoneRecords``` is now ```Get-OPZoneRecord``` ("s" dropped to comply to PowerShell cmdlet naming)
-- ```Get-OPZoneRecord``` when ```-Provider``` is not specified, it defaults to "openprovider"
+- ```Get-OPZoneRecords``
+  - Is now ```Get-OPZoneRecord``` ("s" dropped to comply to PowerShell cmdlet naming)
+  - When ```-Provider``` is not specified, it defaults to "openprovider"
+  - ```Domain``` and ```Name``` is now seperated in the output (beforehand ```Name``` included the name + domain)
 
 ## [1.3.0]
 
