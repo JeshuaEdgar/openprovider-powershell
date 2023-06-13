@@ -89,6 +89,7 @@
         "New-OPZoneRecordObject",
         "Remove-OPNameserver",
         "Remove-OPZone",
+        "Remove-OPZoneRecord",
         "Set-OPZoneRecord",
         "Send-OPSSLApproverEmail",
         "Update-OPDomain",
