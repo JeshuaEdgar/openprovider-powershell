@@ -1,6 +1,6 @@
 # OpenProviderPowershell
 
-## [Changelog](https://github.com/JeshuaEdgar/OpenProviderPowershell/blob/development/CHANGELOG.md)
+## [Changelog](./CHANGELOG.md)
 
 ## How to use
 
