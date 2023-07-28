@@ -53,6 +53,6 @@ function Connect-OpenProvider {
         }
     }
     catch {
-        throw $_.Exception.Message
+        Write-Error $_.Exception.Message
     }
 }

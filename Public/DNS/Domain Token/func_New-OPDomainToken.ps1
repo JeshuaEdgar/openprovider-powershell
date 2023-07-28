@@ -20,7 +20,7 @@ function New-OPDomainToken {
         }
     }
     catch {
-        throw $_.Exception.Message
+        Write-Error $_.Exception.Message
     }
     return $return_object
 }

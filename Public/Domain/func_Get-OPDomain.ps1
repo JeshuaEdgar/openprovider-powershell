@@ -18,8 +18,7 @@ function Get-OPDomain {
             $domains = (Invoke-OPRequest -Method Get -Endpoint "domains" -Body $domain_request_body).data.results
         }
         catch {
-            throw $_.Exception.Message
-            return
+            Write-Error $_.Exception.Message
         }
     }
     
@@ -30,6 +29,7 @@ function Get-OPDomain {
             status = "ACT"
         }
         $total_domains = (Invoke-OPRequest -Method Get -Endpoint "domains" -Body $req_body_total).data.total
+        Write-Verbose "$total_domains found"
         try {
             do {
                 if ($total_domains -gt $limit) {
@@ -52,8 +52,7 @@ function Get-OPDomain {
             )
         }
         catch {
-            throw $_.Exception.Message
-            return
+            Write-Error $_.Exception.Message
         }    
     }
 
@@ -84,7 +83,7 @@ function Get-OPDomain {
         }
     }
     else {
-        throw "Not able to find any domains with $Domain as search query"
+        Write-Error "Not able to find any domains with $Domain as search query"
     }
     return $return_object 
 }

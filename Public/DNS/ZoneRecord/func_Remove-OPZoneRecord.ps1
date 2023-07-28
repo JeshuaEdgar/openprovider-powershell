@@ -13,7 +13,7 @@ function Remove-OPZoneRecord {
         }
 
         elseif (-not $Record) {
-            throw "Missing 'Record'"
+            Write-Error "Missing 'Record'"
         }
 
         $RemoveRecord = @{
@@ -41,7 +41,7 @@ function Remove-OPZoneRecord {
             }
         }
         catch {
-            throw $_.Exception.Message
+            Write-Error $_.Exception.Message
         }
     }
     

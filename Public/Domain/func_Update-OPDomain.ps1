@@ -54,6 +54,6 @@ function Update-OPDomain {
         }
     }
     catch {
-        throw $_.Exception.Message
+        Write-Error $_.Exception.Message
     }
 }

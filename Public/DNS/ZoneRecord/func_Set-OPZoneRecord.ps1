@@ -7,7 +7,7 @@ function Set-OPZoneRecord {
         [parameter(ParameterSetName = "ManualInput", Position = 0)]
         [ValidateScript({
                 if ($InputObject) {
-                    throw "Cannot accept both pipeline input and 'Record' parameter"
+                    Write-Error "Cannot accept both pipeline input and 'Record' parameter"
                 }
                 $true
             })]
@@ -29,12 +29,12 @@ function Set-OPZoneRecord {
     process {
         if ($InputObject) {
             if (-not ($Name -or $Priority -or $TTL -or $Value)) {
-                throw "No changes are defined!"
+                Write-Error "No changes are defined!"
             }
             $Record = $InputObject
         }
         elseif (-not ($Record) -and -not ($Name -or $Priority -or $TTL -or $Value)) {
-            throw "No changes are defined!"
+            Write-Error "No changes are defined!"
         }
 
         $NewRecord = $Record | ConvertTo-Json -Depth 100 | ConvertFrom-Json
@@ -86,7 +86,7 @@ function Set-OPZoneRecord {
             }
         }
         catch {
-            throw $_.Exception.Message
+            Write-Error $_.Exception.Message
         }
     }
 }

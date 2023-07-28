@@ -32,6 +32,13 @@ For examples on how to use these new pipeline features please see the example se
 
 - ```New-OPZoneRecordObject```
 
+## [1.3.1]
+
+### Fixed
+
+- Get-OPDomain is fixed withing PowerShell 7
+- throws have been replaced by a milder Write-Error for non-terminating errors
+
 ## [1.3.0]
 
 ### Changed

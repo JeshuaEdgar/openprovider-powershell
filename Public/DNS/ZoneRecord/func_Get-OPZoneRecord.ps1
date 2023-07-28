@@ -26,7 +26,7 @@ function Get-OPZoneRecord {
             $Domain = $InputObject.Domain
         }
         elseif (-not $Domain) {
-            throw "'Domain' is a mandatory parameter! Please specify this parameter"
+            Write-Error "'Domain' is a mandatory parameter! Please specify this parameter"
         }
 
         $request_splat = @{
@@ -57,7 +57,7 @@ function Get-OPZoneRecord {
             }
         }
         catch {
-            throw $_.Exception.Message
+            Write-Error $_.Exception.Message
         }
         return $return_object 
     }

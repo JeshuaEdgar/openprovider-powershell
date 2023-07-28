@@ -39,8 +39,8 @@ function Invoke-OPRequest {
             Method = $Method
             Uri    = ($script:OpenProviderSession.Uri + $Endpoint)
         }
-        # check if get method + query params (powershell 5.1 compatibility)
-        if (($Method -eq "Get" -and $Body) -and ($PSVersionTable.PSEdition -eq "Desktop")) {
+        # check if get method + query params
+        if (($Method -eq "Get" -and $Body)) {
             $request_splat.Uri = ($script:OpenProviderSession.Uri + $Endpoint + (New-QueryString -Parameters $Body))
         }
         else {
@@ -53,7 +53,7 @@ function Invoke-OPRequest {
 
         # check if command is not being called from $functionExceptions
         if ($functionCallStack -notin $functionExceptions) {
-            $request_splat.Headers += @{ Authorization = "Bearer $($OpenProviderSession.AuthToken)" }
+            $request_splat.Headers += @{ Authorization = "Bearer $($OpenProviderSession.AuthToken)"; "Content-Type" = "application/json" }
         }
         # Write-Host $request_splat
         $request = Invoke-RestMethod @request_splat

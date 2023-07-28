@@ -17,7 +17,7 @@ function Remove-OPZone {
             $Provider = $InputObject.Provider
         }
         elseif (-not($Domain -and $Provider)) {
-            throw "Missing parameter(s), both 'Domain' and 'Provider' need to provided"
+            Write-Error "Missing parameter(s), both 'Domain' and 'Provider' need to provided"
         }
 
         $request_body = @{
@@ -33,7 +33,7 @@ function Remove-OPZone {
             }
         }
         catch {
-            throw $_.Exception.Message
+            Write-Error $_.Exception.Message
         } 
     }
 }

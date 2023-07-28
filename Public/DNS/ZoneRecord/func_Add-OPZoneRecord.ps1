@@ -36,7 +36,7 @@ function Add-OPZoneRecord {
         [parameter(ParameterSetName = "ManualInput")]
         [ValidateScript({
                 if (!($PSBoundParameters["Type"] -eq "MX" -and $_ -is [int])) {
-                    throw "MX Record Priority is not a valid integer, please adjust your input"
+                    Write-Error "MX Record Priority is not a valid integer, please adjust your input"
                 }
                 $true
             })]
@@ -49,7 +49,7 @@ function Add-OPZoneRecord {
             $ZoneID = $InputObject.ZoneID
         }
         elseif (-not ($Domain -and $ZoneID)) {
-            throw "'Domain' and 'ZoneID' are mandatory parameters! Please add the missing parameter(s)"
+            Write-Error "'Domain' and 'ZoneID' are mandatory parameters! Please add the missing parameter(s)"
         }
         
         #build the required record body
@@ -83,7 +83,7 @@ function Add-OPZoneRecord {
             }
         }
         catch {
-            throw $_.Exception.Message
+            Write-Error $_.Exception.Message
         }
     }
 }

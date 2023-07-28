@@ -33,7 +33,7 @@ function Get-OPDomainAvailability {
         }
     }
     catch {
-        throw $_.Exception.Message
+        Write-Error $_.Exception.Message
     }
     return $return_object 
 }
