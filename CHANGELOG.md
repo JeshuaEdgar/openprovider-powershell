@@ -1,8 +1,6 @@
 # Changelog
 
-## [Unreleased]
-
-Warning: this version CAN break a lot of functionality, please read through the changelog and update scripts accordingly.
+## [1.4.0]
 
 ### Added
 
