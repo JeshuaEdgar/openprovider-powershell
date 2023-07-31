@@ -51,11 +51,12 @@ Describe "Open Provider PowerShell tests" {
         }
 
         It "Should create a DNS zone record" {
-            Get-OPZone -Domain $env:Domain -Provider sectigo | Add-OPZoneRecord -Name "unittest" -Type MX -Value ($env:randomValue1, $env:Domain -join ".") -Priority 1 | Should -BeTrue
+            $zone = Get-OPZone -Domain $env:Domain -Provider sectigo
+            Add-OPZoneRecord -Domain $zone.Domain -ZoneID $zone.ZoneID -Name "unittest" -Type MX -Value ($env:randomValue1, $env:Domain -join ".") -Priority 1 | Should -BeTrue
         }
 
         It "Should set a DNS record" {
-            $record =  Get-OPZoneRecord -Domain $env:Domain -Provider sectigo | Where-Object { $_.Type -eq "MX" -and $_.Name -eq "unittest" }
+            $record = Get-OPZoneRecord -Domain $env:Domain -Provider sectigo | Where-Object { $_.Type -eq "MX" -and $_.Name -eq "unittest" }
             Set-OPZoneRecord -Record $record -Value ($env:randomValue2, $record.Domain -join ".") | Should -BeTrue
         }
 
