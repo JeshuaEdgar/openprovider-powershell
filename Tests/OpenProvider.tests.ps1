@@ -4,7 +4,8 @@ param (
 )
 BeforeAll {
     Import-Module (Resolve-Path("OpenProviderPowershell.psd1")) -Force
-    $env:randomValue = -join ((97..122) | Get-Random -Count 8 | ForEach-Object { [char]$_ }) 
+    $env:randomValue1 = -join ((97..122) | Get-Random -Count 8 | ForEach-Object { [char]$_ }) 
+    $env:randomValue2 = -join ((97..122) | Get-Random -Count 8 | ForEach-Object { [char]$_ }) 
 }
 
 Describe "Open Provider PowerShell tests" {
@@ -32,28 +33,33 @@ Describe "Open Provider PowerShell tests" {
 
     Context "DNS" {
 
+        BeforeAll {
+          $env:Domain = (Get-OPDomain)[0] | Select-Object -ExpandProperty Domain
+        }
+
+        BeforeEach {
+            Start-Sleep 5
+        }
+
         It "Should get OpenProvider DNS zones" {
-            $domain = (Get-OPDomain)[0]
-            (Get-OPZone -Domain $domain.Domain -Provider sectigo).Active | Should -BeTrue
+            (Get-OPZone -Domain $env:Domain -Provider sectigo).Active | Should -BeTrue
         }
  
         It "Should get DNS zone records" {
-            ((Get-OPDomain)[0] | Get-OPZoneRecord -Provider sectigo).count | Should -BeGreaterThan 3
+            (Get-OPZoneRecord -Domain $env:Domain -Provider sectigo).count | Should -BeGreaterThan 3
         }
 
         It "Should create a DNS zone record" {
-            $domain = (Get-OPDomain)[0]
-            Get-OPZone -Domain $domain.Domain -Provider sectigo | Add-OPZoneRecord -Name "unittest" -Type MX -Value ($env:randomValue, $domain.domain -join ".") -Priority 1 | Should -BeTrue
+            Get-OPZone -Domain $env:Domain -Provider sectigo | Add-OPZoneRecord -Name "unittest" -Type MX -Value ($env:randomValue, $env:Domain -join ".") -Priority 1 | Should -BeTrue
         }
 
         It "Should set a DNS record" {
-            $record = (Get-OPDomain)[0] | Get-OPZoneRecord -Provider sectigo | Where-Object { $_.Type -eq "MX" -and $_.Value -eq ($env:randomValue, $domain.domain -join ".") }
-            Set-OPZoneRecord -Record $record -Value ("test", $record.Domain -join ".") | Should -BeTrue
+            $record =  Get-OPZoneRecord -Domain $env:Domain -Provider sectigo | Where-Object { $_.Type -eq "MX" -and $_.Name -eq "unittest" }
+            Set-OPZoneRecord -Record $record -Value ($env:randomValue2, $record.Domain -join ".") | Should -BeTrue
         }
 
         It "Should delete a DNS record" {
-            $domain = (Get-OPDomain)[0]
-            $record = $domain | Get-OPZoneRecord -Provider sectigo | Where-Object { $_.Type -eq "MX" -and $_.Value -eq ("test", $domain.Domain -join ".") }
+            $record = Get-OPZoneRecord -Domain $env:Domain -Provider sectigo | Where-Object { $_.Type -eq "MX" -and $_.Name -eq "unittest" }
             Remove-OPZoneRecord -Record $record | Should -BeTrue
         }
     }
