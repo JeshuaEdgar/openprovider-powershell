@@ -10,6 +10,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: Publish Module
       run: | 
-        $psdPath = Get-ChildItem . -Recurse | Where-Object {$_.Name -eq "OpenProviderPowershell.psd1"} | Select -ExpandProperty FullName
-        Publish-Module -NuGetApiKey ${{ secrets.PS_GALLERY_KEY }} -Path $psdPath -Verbose
+        $directory = Get-ChildItem . -Recurse | Where-Object {$_.Name -eq "OpenProviderPowershell.psd1"} | Get-Item | Select -ExpandProperty directoryName
+        $publishSplat = @{NuGetApiKey = "${{ secrets.PS_GALLERY_KEY }}"; Path = $directory }
+        Publish-Module @publishSplat -Verbose
       shell: pwsh
