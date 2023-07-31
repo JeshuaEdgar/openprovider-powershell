@@ -35,6 +35,7 @@ Describe "Open Provider PowerShell tests" {
 
         BeforeAll {
           $env:Domain = (Get-OPDomain)[0] | Select-Object -ExpandProperty Domain
+          Write-Host $env:Domain
         }
 
         BeforeEach {
@@ -50,7 +51,7 @@ Describe "Open Provider PowerShell tests" {
         }
 
         It "Should create a DNS zone record" {
-            Get-OPZone -Domain $env:Domain -Provider sectigo | Add-OPZoneRecord -Name "unittest" -Type MX -Value ($env:randomValue, $env:Domain -join ".") -Priority 1 | Should -BeTrue
+            Get-OPZone -Domain $env:Domain -Provider sectigo | Add-OPZoneRecord -Name "unittest" -Type MX -Value ($env:randomValue1, $env:Domain -join ".") -Priority 1 | Should -BeTrue
         }
 
         It "Should set a DNS record" {
