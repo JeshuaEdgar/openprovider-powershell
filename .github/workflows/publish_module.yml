@@ -12,6 +12,7 @@ jobs:
     - name: Publish Module
       run: | 
         $directory = Get-ChildItem . -Recurse | Where-Object {$_.Name -eq "OpenProviderPowershell.psd1"} | Get-Item | Select -ExpandProperty directoryName
-        $publishSplat = @{NuGetApiKey = "${{ secrets.PS_GALLERY_KEY }}"; Path = $directory }
-        Publish-Module @publishSplat -Verbose
+        Get-ChildItem $directory
+        # $publishSplat = @{NuGetApiKey = "${{ secrets.PS_GALLERY_KEY }}"; Path = $directory }
+        # Publish-Module @publishSplat -Verbose
       shell: pwsh
