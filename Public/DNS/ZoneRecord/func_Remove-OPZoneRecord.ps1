@@ -37,7 +37,7 @@ function Remove-OPZoneRecord {
             $request = Invoke-OPRequest -Method "Put" -Endpoint "dns/zones/$($Record.Domain)" -Body $request_body
             if ($request.data.success -eq $true) {
                 Write-Host "$($RemoveRecord.Type) record has been succesfully deleted for domain $($Record.Domain)!"
-                return $true | Out-Null
+                return $true
             }
         }
         catch {

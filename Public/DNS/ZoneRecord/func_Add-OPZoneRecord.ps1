@@ -79,7 +79,7 @@ function Add-OPZoneRecord {
             $request = Invoke-OPRequest -Method Put -Endpoint "dns/zones/$($Domain)" -Body $request_body
             if ($request.data.success -eq $true) {
                 Write-Host "$($Type) record has been succesfully created for domain $($Domain)!"
-                return $true | Out-Null
+                return $true
             }
         }
         catch {

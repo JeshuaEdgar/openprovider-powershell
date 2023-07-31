@@ -1,24 +1,14 @@
 function Update-OPDomain {
     [CmdletBinding()]
     param (
-        [parameter(Mandatory = $true)]
-        [int]$DomainID,
-
-        [ValidateSet("on", "off", "default")]
-        [string]$AutoRenew,
-
+        [parameter(Mandatory = $true)][int]$DomainID,
+        [ValidateSet("on", "off", "default")][string]$AutoRenew,
         [string]$Comments,
-
         [string]$NameserverGroup,
-
         [bool]$EnableSpamExperts,
-
         [bool]$EnableSectigo,
-
         [bool]$EnablePrivateWhoIs,
-
         [bool]$Locked,
-
         [bool]$EnableDNSSEC
     )
 
@@ -50,7 +40,7 @@ function Update-OPDomain {
         $request = Invoke-OPRequest -Method Put -Endpoint "domains/$DomainID" -Body $request_body
         if ($request.data.status -eq "ACT") {
             Write-Host "Domain updated succesfully!"
-            return $true | Out-Null
+            return $true
         }
     }
     catch {

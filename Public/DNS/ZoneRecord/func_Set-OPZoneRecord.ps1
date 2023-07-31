@@ -28,9 +28,6 @@ function Set-OPZoneRecord {
     )
     process {
         if ($InputObject) {
-            if (-not ($Name -or $Priority -or $TTL -or $Value)) {
-                Write-Error "No changes are defined!"
-            }
             $Record = $InputObject
         }
         elseif (-not ($Record) -and -not ($Name -or $Priority -or $TTL -or $Value)) {
@@ -53,12 +50,12 @@ function Set-OPZoneRecord {
             $NewRecord.Value = $Value
         }
 
-        $request_body = @{
-            id      = $Record.ZoneID
-            name    = $Record.Domain
-            records = @{
-                update = @(
-                    @{
+        $request_body = [ordered]@{
+            id       = $Record.ZoneID
+            name     = $Record.Domain
+            provider = $Record.Provider
+            records  = @{
+                update = @( @{
                         original_record = @{
                             name  = $Record.Name
                             prio  = $Record.Priority
@@ -73,16 +70,19 @@ function Set-OPZoneRecord {
                             value = $NewRecord.Value
                             type  = $NewRecord.Type
                         }
-
-                    }
-                )
+                    })
             }
         }
+        if ($Record.Type -eq "TXT") { $request_body.records.update.original_record.value = ('"{0}"' -f $Record.Value) }
+        if ($NewRecord.Type -eq "TXT") { $request_body.records.update.record.value = ('"{0}"' -f $NewRecord.Value) }
+
+        if ($null -ne $NewRecord.Priority) { $request_body.records.update.record.prio = $NewRecord.Priority }
+        if ($null -ne $Record.Priority) { $request_body.records.update.record.prio = $Record.Priority }
         try {
             $request = Invoke-OPRequest -Method Put -Endpoint "dns/zones/$($Record.Domain)" -Body $request_body
             if ($request.data.success -eq $true) {
                 Write-Host "Record has been succesfully set!"
-                return $true | Out-Null
+                return $true
             }
         }
         catch {

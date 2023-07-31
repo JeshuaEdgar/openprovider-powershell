@@ -1,0 +1,15 @@
+name: Publish module to PowerShellGallery
+on:
+  release:
+    types: [published]
+  
+jobs:
+  publish:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Publish Module
+      run: | 
+        $psdPath = Get-ChildItem . -Recurse | Where-Object {$_.Name -eq "OpenProviderPowershell.psd1"} | Select -ExpandProperty FullName
+        Publish-Module -NuGetApiKey ${{ secrets.PS_GALLERY_KEY }} -Path $psdPath -Verbose
+      shell: pwsh

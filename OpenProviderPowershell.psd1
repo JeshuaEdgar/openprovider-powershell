@@ -12,7 +12,7 @@
     RootModule        = '.\OpenProviderPowershell.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.4.0'
+    ModuleVersion     = '1.4.1'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -82,16 +82,15 @@
         "Get-OPSSLOrders",
         "Get-OPSSLProducts",
         "Get-OPZone",
-        "Get-OPZoneRecords",
+        "Get-OPZoneRecord",
         "New-OPAuthCode",
         "New-OPDomainToken",
         "New-OPZone",
-        "New-OPZoneRecordObject",
         "Remove-OPNameserver",
         "Remove-OPZone",
         "Remove-OPZoneRecord",
-        "Set-OPZoneRecord",
         "Send-OPSSLApproverEmail",
+        "Set-OPZoneRecord",
         "Update-OPDomain",
         "Update-OPNameserver"
     )

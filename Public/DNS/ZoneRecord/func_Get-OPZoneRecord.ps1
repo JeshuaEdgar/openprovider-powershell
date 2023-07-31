@@ -26,7 +26,7 @@ function Get-OPZoneRecord {
             $Domain = $InputObject.Domain
         }
         elseif (-not $Domain) {
-            Write-Error "'Domain' is a mandatory parameter! Please specify this parameter"
+            throw "'Domain' is a mandatory parameter! Please specify this parameter"
         }
 
         $request_splat = @{
@@ -42,8 +42,9 @@ function Get-OPZoneRecord {
                 $return_object = @()
                 $request.data.results | ForEach-Object {
                     $return_object += [PSCustomObject]@{
-                        Domain   = $Domain
                         ZoneID   = $ZoneID.ZoneID
+                        Domain   = $Domain
+                        Provider = $Provider
                         Name     = ($_.name -replace $Domain, "") -replace ".$"
                         Priority = $_.prio
                         TTL      = $_.ttl

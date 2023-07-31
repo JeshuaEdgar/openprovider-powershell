@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.4.1]
+
+### Added
+
+- Unit tests!
+
+### Fixed/changed
+
+- Refactor of multiple functions (minor updates/fixes)
+
 ## [1.4.0]
 
 ### Added

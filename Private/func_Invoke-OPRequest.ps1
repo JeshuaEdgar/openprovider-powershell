@@ -44,7 +44,7 @@ function Invoke-OPRequest {
             $request_splat.Uri = ($script:OpenProviderSession.Uri + $Endpoint + (New-QueryString -Parameters $Body))
         }
         else {
-            $request_splat.Body += $Body | ConvertTo-Json -Depth 4
+            $request_splat.Body += $Body | ConvertTo-Json -Depth 5
         }
         # verbose option to see everything in request splat
         foreach ($key in $request_splat.Keys) {

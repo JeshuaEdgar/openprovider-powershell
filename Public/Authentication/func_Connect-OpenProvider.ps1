@@ -45,11 +45,9 @@ function Connect-OpenProvider {
         if ($Session.code -eq 0) {
             $script:OpenProviderSession.AuthToken = $Session.data.token
             $script:OpenProviderSession.TimeToRefresh = (Get-Date).AddDays(2)
-            $returnMessage = @(
-                Write-Host "Welcome to OpenProvider!"
-                Write-Host "Please be aware your token will expire on $($script:OpenProviderSession.TimeToRefresh)"
-            )
-            return $returnMessage
+            Write-Host "Welcome to OpenProvider!"
+            Write-Host "Please be aware your token will expire on $($script:OpenProviderSession.TimeToRefresh)"
+            return $true
         }
     }
     catch {
