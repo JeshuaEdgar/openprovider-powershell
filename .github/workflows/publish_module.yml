@@ -8,8 +8,10 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
+    - name: Checkout
       uses: actions/checkout@v3
+      with:
+        path: "OpenProviderPowerShell"
     - name: Publish Module
       uses: pcgeek86/publish-powershell-module-action@v20
       with:
